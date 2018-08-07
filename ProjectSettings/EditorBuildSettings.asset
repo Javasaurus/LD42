@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PrimaryScene.unity
     guid: 51afa7ee299b91d4ba5f747742bacdf2
+  - enabled: 1
+    path: Assets/Scenes/Example/DialogExampleScene.unity
+    guid: 22adbcb36a7d75640a4e983b7cedeb53
   m_configObjects: {}

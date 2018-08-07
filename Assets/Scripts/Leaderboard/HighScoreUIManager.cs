@@ -7,12 +7,10 @@ using UnityEngine.UI;
 public class HighScoreUIManager : MonoBehaviour
 {
 
-    public GameObject LoadingAnimation;
-    public TMPro.TextMeshProUGUI textField;
-    public Scrollbar leaderBoardScrollBar;
-
-
-    public string currentUser = "ElysiaGrifffin";
+    public UnityEngine.GameObject LoadingAnimation;                 // A loading indicator (for example text or a spinner)
+    public TMPro.TextMeshProUGUI textField;             // A textfield where the highscores will be written to
+    public Scrollbar leaderBoardScrollBar;              // The leaderboard's scrollbar (autopositioning to the submitted value)
+    public string currentUser = "";                     // The current user (last one that submitted will be displayed in RED)
 
     void Start()
     {

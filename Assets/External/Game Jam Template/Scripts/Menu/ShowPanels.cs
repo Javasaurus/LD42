@@ -5,19 +5,19 @@ using UnityEngine.EventSystems;
 public class ShowPanels : MonoBehaviour
 {
 
-    public GameObject optionsPanel;                         //Store a reference to the Game Object OptionsPanel 
-    public GameObject optionsTint;                          //Store a reference to the Game Object OptionsTint 
-    public GameObject menuPanel;                            //Store a reference to the Game Object MenuPanel 
-    public GameObject leaderboardPanel;                     //Store a reference to the Game Object LeaderboardPanel 
-    public GameObject pausePanel;                           //Store a reference to the Game Object PausePanel 
+    public UnityEngine.GameObject optionsPanel;                         //Store a reference to the Game Object OptionsPanel 
+    public UnityEngine.GameObject optionsTint;                          //Store a reference to the Game Object OptionsTint 
+    public UnityEngine.GameObject menuPanel;                            //Store a reference to the Game Object MenuPanel 
+    public UnityEngine.GameObject leaderboardPanel;                     //Store a reference to the Game Object LeaderboardPanel 
+    public UnityEngine.GameObject pausePanel;                           //Store a reference to the Game Object PausePanel 
 
-    private GameObject activePanel;
+    private UnityEngine.GameObject activePanel;
     private MenuObject activePanelMenuObject;
     private EventSystem eventSystem;
 
 
 
-    private void SetSelection(GameObject panelToSetSelected)
+    private void SetSelection(UnityEngine.GameObject panelToSetSelected)
     {
 
         activePanel = panelToSetSelected;
@@ -33,7 +33,7 @@ public class ShowPanels : MonoBehaviour
         SetSelection(menuPanel);
     }
 
-    public void ShowPanel(GameObject panel)
+    public void ShowPanel(UnityEngine.GameObject panel)
     {
         panel.SetActive(true);
         optionsTint.SetActive(true);
@@ -41,7 +41,7 @@ public class ShowPanels : MonoBehaviour
         SetSelection(panel);
     }
 
-    public void HidePanel(GameObject panel)
+    public void HidePanel(UnityEngine.GameObject panel)
     {
         menuPanel.SetActive(true);
         panel.SetActive(false);

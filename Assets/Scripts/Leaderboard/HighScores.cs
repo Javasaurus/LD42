@@ -52,31 +52,49 @@ public class HighScores : MonoBehaviour
         }
         else
         {
-            GameObject.Destroy(this);
+            UnityEngine.GameObject.Destroy(this);
         }
     }
 
+    /// <summary>
+    /// Gets called when the scores are succesfully uploaded
+    /// </summary>
     public void OnUploadCompleted()
     {
         Debug.Log("Highscore was submitted !");
     }
 
+    /// <summary>
+    /// Gets called when a download was completed (single or multiple highscores)
+    /// </summary>
     public void OnDownloadCompleted()
     {
         Debug.Log("HighScoresRetrieved were retrieved !");
     }
 
+    /// <summary>
+    /// Called when the upload failed
+    /// </summary>
     public void OnUploadFailed()
     {
         Debug.Log("Highscore was NOT submitted !");
     }
 
+    /// <summary>
+    /// Called when the download failed
+    /// </summary>
     public void OnDownloadFailed()
     {
         Debug.Log("HighScoresRetrieved were NOT retrieved !");
     }
 
-
+    /// <summary>
+    /// Submis a highscore (no login system in place so theoretically
+    /// everyone can post under the same name,but only the best one 
+    /// gets saved by the server)
+    /// </summary>
+    /// <param name="username">The username that is posting the score</param>
+    /// <param name="score">The integer value of the score</param>
     public void SubmitHighscore(string username, int score)
     {
         if (isReady)
@@ -106,6 +124,9 @@ public class HighScores : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Retrieves the high scores
+    /// </summary>
     public void GetHighScores()
     {
         StartCoroutine(DownloadHighscores());
@@ -131,6 +152,10 @@ public class HighScores : MonoBehaviour
         isReady = true;
     }
 
+    /// <summary>
+    /// Retrieves a specific highscore
+    /// </summary>
+    /// <param name="username"></param>
     public void GetHighScore(string username)
     {
         StartCoroutine(DownloadSingleHighscore(username));
