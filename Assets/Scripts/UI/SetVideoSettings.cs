@@ -6,56 +6,62 @@ using UnityEngine.UI;
 
 public class SetVideoSettings : MonoBehaviour
 {
-    public Dropdown resolutionDropdown;
-    List<Resolution> allowedResolutions;
+    public Dropdown resolutionDropdown;             // the dropdown box for resolutions
+    public Dropdown qualityDropdown;                // the dropdown box for quality settings
+    public Toggle fullScreenToggle;                 // toggle for full screen
 
-    List<string> resolutionNames;
-    int currentResolutionIndex;
+    List<Resolution> allowedResolutions;            // the list of allowed resolutions (in relation to the refresh rate etc (59 or 60 hz)
+    List<string> resolutionNames;                   // list of resolution names to populate the drop down
+    int currentResolutionIndex;                     // the active resolution
 
-    void Awake()
+    void Start()
     {
-        QualitySettings.SetQualityLevel(3);
-        resolutionDropdown.ClearOptions();
-        LoadResolutions();
-        resolutionDropdown.AddOptions(resolutionNames);
+        Init();
+    }
+
+    public void Init()
+    {
+        PreferencesManager.INSTANCE.Load();
+
+        //LOAD QUALITY FROM PLAYER PREFS
+        if (PreferencesManager.INSTANCE.videoQualityIndex > 0 && PreferencesManager.INSTANCE.videoQualityIndex < QualitySettings.names.Length)
+        {
+            SetVideoQuality(PreferencesManager.INSTANCE.videoQualityIndex);
+            qualityDropdown.value = PreferencesManager.INSTANCE.videoQualityIndex;
+            qualityDropdown.RefreshShownValue();
+        }
+
+        InitResolutions();
+
+        //LOAD RESOLUTION FROM PLAYER PREFS
+        if (PreferencesManager.INSTANCE.videoResolutionIndex > 0 && PreferencesManager.INSTANCE.videoResolutionIndex < allowedResolutions.Count)
+        {
+            SetResolution(PreferencesManager.INSTANCE.videoResolutionIndex);
+            currentResolutionIndex = PreferencesManager.INSTANCE.videoResolutionIndex;
+        }
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        //LOAD FULLSCREEN FROM PLAYER PREFS
+        SetFullscreen(PreferencesManager.INSTANCE.videoFullScreen);
+
     }
 
-
-    public void SetVideoQuality(int qualityIndex)
+    /// <summary>
+    /// Initializes the resolutions for the drop down
+    /// </summary>
+    void InitResolutions()
     {
-        QualitySettings.SetQualityLevel(qualityIndex);
-        Debug.Log("Set the quality to " + QualitySettings.GetQualityLevel());
+        resolutionDropdown.ClearOptions();
+        FindFitResolutions();
+        resolutionDropdown.AddOptions(resolutionNames);
     }
 
-    public void SetFullscreen(bool fullScreen)
-    {
-        Screen.fullScreen = fullScreen;
-        if (!fullScreen)
-        {
-            Resolution resolution = Screen.currentResolution;
-            Screen.SetResolution(resolution.width, resolution.height, fullScreen);
-        }
-    }
-
-
-    public void SetResolution(int resolutionIndex)
-    {
-        if (allowedResolutions.Count > 1)
-        {
-            Resolution resolution = allowedResolutions[resolutionIndex];
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-            resolutionDropdown.RefreshShownValue();
-        }
-    }
-
-    bool IsSameResolution(Resolution a, Resolution b)
-    {
-        return a.width == b.width && a.height == b.height && a.refreshRate == b.refreshRate;
-    }
-
-    void LoadResolutions()
+    /// <summary>
+    /// Discovers available resolutions that are actually 
+    /// working on this display
+    /// </summary>
+    void FindFitResolutions()
     {
         //we can assume the current refreshrate is the one to use !
         int currentRefreshRate = Screen.currentResolution.refreshRate;
@@ -112,6 +118,67 @@ public class SetVideoSettings : MonoBehaviour
             resolutionNames.Add("Default");
         }
     }
+
+    /// <summary>
+    /// Sets the video quality
+    /// </summary>
+    /// <param name="qualityIndex"> The index of the quality option (see in Unity inspector in Edit > Project Settings > Quality )</param>
+    public void SetVideoQuality(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+        Debug.Log("Set the quality to " + QualitySettings.GetQualityLevel());
+        PreferencesManager.INSTANCE.videoQualityIndex = qualityIndex;
+    }
+
+    /// <summary>
+    /// Sets the resolution to the chosen format
+    /// </summary>
+    /// <param name="resolutionIndex">The index of the currently selected resolution</param>
+    public void SetResolution(int resolutionIndex)
+    {
+        if (allowedResolutions == null)
+        {
+            InitResolutions();
+        }
+        if (allowedResolutions.Count > 1)
+        {
+            Resolution resolution = allowedResolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+            resolutionDropdown.RefreshShownValue();
+            PreferencesManager.INSTANCE.videoResolutionIndex = resolutionIndex;
+        }
+    }
+
+    /// <summary>
+    /// Sets the screen to fullscreen if enabled
+    /// </summary>
+    /// <param name="fullScreen">is fullScreen</param>
+    public void SetFullscreen(bool fullScreen)
+    {
+        Screen.fullScreen = fullScreen;
+        if (!fullScreen)
+        {
+            Resolution resolution = Screen.currentResolution;
+            Screen.SetResolution(resolution.width, resolution.height, fullScreen);
+        }
+        fullScreenToggle.isOn = fullScreen;
+        PreferencesManager.INSTANCE.videoFullScreen = fullScreen;
+    }
+
+
+
+    /// <summary>
+    /// Verifies if resolutions are identical (there is no static operator for Resolutions)
+    /// </summary>
+    /// <param name="a"> the first resolution </param>
+    /// <param name="b"> the second resolution </param>
+    /// <returns>true if the resolutions are equal</returns>
+    bool IsSameResolution(Resolution a, Resolution b)
+    {
+        return a.width == b.width && a.height == b.height && a.refreshRate == b.refreshRate;
+    }
+
+
 
 
 }
