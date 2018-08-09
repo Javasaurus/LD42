@@ -10,7 +10,7 @@ public class StartOptions : MonoBehaviour
 {
 
     public MenuSettings menuSettingsData;
-    public int sceneToStart = 1;                                        //Index number in build settings of scene to load if changeScenes is true
+    public int sceneToStart;                                            //Index number in build settings of scene to load if changeScenes is true
     public bool changeMusicOnStart;										//Choose whether to continue playing menu music or start a new music clip
     public CanvasGroup fadeOutImageCanvasGroup;                         //Canvas group used to fade alpha of image which fades in before changing scenes
     public Image fadeImage;                                             //Reference to image used to fade out before changing scenes
@@ -111,6 +111,7 @@ public class StartOptions : MonoBehaviour
         {
             yield return null;
         }
+        Debug.Log("New scene being loaded. Scene index: " + sceneIndex);
         SceneManager.LoadScene(sceneIndex);
     }
 

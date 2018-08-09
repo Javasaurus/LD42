@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
 
     public static InputManager INSTANCE;
 
-
-
-    //movement   
+    //movement
     public Vector2 directionalInput = Vector2.zero;
     public KeyCode moveUp = KeyCode.W;
     public KeyCode moveDown = KeyCode.S;
@@ -38,7 +34,7 @@ public class InputManager : MonoBehaviour
     {
         if (INSTANCE != null)
         {
-            UnityEngine.GameObject.Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
