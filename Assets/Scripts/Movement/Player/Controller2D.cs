@@ -16,7 +16,6 @@ public class Controller2D : RaycastController
 
     }
 
-
     public void Move(Vector2 moveAmount, bool standingOnPlatform)
     {
         Move(moveAmount, Vector2.zero, standingOnPlatform);
