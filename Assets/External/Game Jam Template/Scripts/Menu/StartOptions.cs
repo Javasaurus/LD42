@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 //MODIFIED BY JAVASAURUS
 
