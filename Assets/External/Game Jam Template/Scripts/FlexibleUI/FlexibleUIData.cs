@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "Flexible UI Data")]
 public class FlexibleUIData : ScriptableObject
@@ -20,4 +17,8 @@ public class FlexibleUIData : ScriptableObject
     [Header("Text Attributes")]
     public Font font;
     public Color textColor;
+
+    [Header("Background Color")]
+    public Color background;
+
 }
