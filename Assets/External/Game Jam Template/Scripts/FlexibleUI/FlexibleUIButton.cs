@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent (typeof(Button))]
 public class FlexibleUIButton : FlexibleUI
-
 {
-    private Button button;
 
+    Button button;
 
     void Awake()
     {
@@ -22,6 +19,4 @@ public class FlexibleUIButton : FlexibleUI
         button.colors = flexibleUIData.buttonColorBlock;
     }
 
-    
-	
 }

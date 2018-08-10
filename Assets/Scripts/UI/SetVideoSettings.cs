@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SetVideoSettings : MonoBehaviour
 {
+
     public Dropdown resolutionDropdown;             // the dropdown box for resolutions
     public Dropdown qualityDropdown;                // the dropdown box for quality settings
     public Toggle fullScreenToggle;                 // toggle for full screen
+    public List<Vector2> resolutionsV2;             // for the sake of debugging all resolutions before we mess with them
 
     List<Resolution> allowedResolutions;            // the list of allowed resolutions (in relation to the refresh rate etc (59 or 60 hz)
     List<string> resolutionNames;                   // list of resolution names to populate the drop down
@@ -21,6 +22,7 @@ public class SetVideoSettings : MonoBehaviour
 
     public void Init()
     {
+
         PreferencesManager.INSTANCE.Load();
 
         //LOAD QUALITY FROM PLAYER PREFS
@@ -47,9 +49,7 @@ public class SetVideoSettings : MonoBehaviour
 
     }
 
-    /// <summary>
     /// Initializes the resolutions for the drop down
-    /// </summary>
     void InitResolutions()
     {
         resolutionDropdown.ClearOptions();
@@ -63,42 +63,57 @@ public class SetVideoSettings : MonoBehaviour
     /// </summary>
     void FindFitResolutions()
     {
-        //we can assume the current refreshrate is the one to use !
-        int currentRefreshRate = Screen.currentResolution.refreshRate;
 
-        //DIRTY WAY TO CLEAN IT UP , DID NOT WORK WITH LINQ FOR SOME REASON
-        Resolution[] resolutions = Screen.resolutions;
-
-        //filter out refreshrates
-        List<Resolution> applicableResolutions = new List<Resolution>();
-        foreach (Resolution resolution in resolutions)
+        //simpler alternative for mac users
+        if (Application.platform == RuntimePlatform.OSXEditor || Application.platform == RuntimePlatform.OSXPlayer)
         {
-            if (resolution.refreshRate == currentRefreshRate)
-            {
-                applicableResolutions.Add(resolution);
-            }
+            EditorRes(Screen.resolutions);
+            allowedResolutions = Screen.resolutions.ToList();
         }
-
-        //filter out identicals
-        allowedResolutions = new List<Resolution>();
-        foreach (Resolution resolution in applicableResolutions)
+        else
         {
-            if (allowedResolutions.Count == 0)
+
+            //we can assume the current refreshrate is the one to use !
+            int currentRefreshRate = Screen.currentResolution.refreshRate;
+
+            //DIRTY WAY TO CLEAN IT UP, DID NOT WORK WITH LINQ FOR SOME REASON
+            Resolution[] resolutions = Screen.resolutions;
+
+            //filter out refreshrates
+            List<Resolution> applicableResolutions = new List<Resolution>();
+            foreach (Resolution resolution in resolutions)
             {
-                allowedResolutions.Add(resolution);
-            }
-            else
-            {
-                //check if it is already there or not
-                foreach (Resolution allowedResolution in allowedResolutions)
+                if (resolution.refreshRate == currentRefreshRate)
                 {
-                    if (!IsSameResolution(resolution, allowedResolution))
+                    applicableResolutions.Add(resolution);
+                }
+                Debug.Log("Current Refresh Rate " + currentRefreshRate + "Resolution Refresh Rate: " + resolution.refreshRate);
+            }
+
+            EditorRes(resolutions);
+
+            //filter out identicals
+            allowedResolutions = new List<Resolution>();
+            foreach (Resolution resolution in applicableResolutions)
+            {
+                if (allowedResolutions.Count == 0)
+                {
+                    allowedResolutions.Add(resolution);
+                }
+                else
+                {
+                    //check if it is already there or not
+                    foreach (Resolution allowedResolution in allowedResolutions)
                     {
-                        allowedResolutions.Add(resolution);
-                        break;
+                        if (!IsSameResolution(resolution, allowedResolution))
+                        {
+                            allowedResolutions.Add(resolution);
+                            break;
+                        }
                     }
                 }
             }
+
         }
 
         // put these into the available list
@@ -117,6 +132,7 @@ public class SetVideoSettings : MonoBehaviour
         {
             resolutionNames.Add("Default");
         }
+
     }
 
     /// <summary>
@@ -178,7 +194,14 @@ public class SetVideoSettings : MonoBehaviour
         return a.width == b.width && a.height == b.height && a.refreshRate == b.refreshRate;
     }
 
-
-
+    void EditorRes(Resolution[] resolutions)
+    {
+        //shows in editor
+        foreach (Resolution res in resolutions)
+        {
+            Vector2 vec = new Vector2(res.width, res.height);
+            resolutionsV2.Add(vec);
+        }
+    }
 
 }

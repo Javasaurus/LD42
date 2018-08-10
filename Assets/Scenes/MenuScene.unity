@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465934, g: 0.49642956, b: 0.5748249, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -852,10 +852,10 @@ RectTransform:
   m_Father: {fileID: 1344281035}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.39036942, y: 0.081}
-  m_AnchorMax: {x: 0.5978769, y: 0.33933967}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -72.95}
+  m_SizeDelta: {x: 165, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &324081564
 GameObject:
@@ -2301,10 +2301,10 @@ RectTransform:
   m_Father: {fileID: 322592498}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 83.003006, y: -43.326897}
-  m_SizeDelta: {x: 166.00601, y: 27.551266}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 35}
+  m_SizeDelta: {x: 165, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &525333476
 MonoBehaviour:
@@ -3128,6 +3128,7 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 626663003}
   qualityDropdown: {fileID: 1705266632}
   fullScreenToggle: {fileID: 888345792}
+  resolutionsV2: []
 --- !u!1 &648920822
 GameObject:
   m_ObjectHideFlags: 0
@@ -3589,10 +3590,10 @@ RectTransform:
   m_Father: {fileID: 322592498}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 83.003006, y: -102.42943}
-  m_SizeDelta: {x: 166.00601, y: 27.551266}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -105}
+  m_SizeDelta: {x: 165, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795960753
 MonoBehaviour:
@@ -5282,10 +5283,10 @@ RectTransform:
   m_Father: {fileID: 1344281035}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.36600003, y: 0.38622645}
-  m_AnchorMax: {x: 0.62012327, y: 0.611}
-  m_AnchoredPosition: {x: 0, y: 0.73498535}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 140}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1144280367
 MonoBehaviour:
@@ -5826,6 +5827,7 @@ GameObject:
   - component: {fileID: 1344281032}
   - component: {fileID: 1344281031}
   - component: {fileID: 1344281030}
+  - component: {fileID: 1344281036}
   m_Layer: 5
   m_Name: MenuPanel
   m_TagString: Untagged
@@ -5890,7 +5892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -5933,6 +5935,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1344281036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1344281029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d087ce1aaf6418680526e01dbdeef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flexibleUIData: {fileID: 11400000, guid: 448a8bcccb6c4a9499413d47af705f17, type: 2}
 --- !u!1 &1349621707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6580,6 +6594,7 @@ MonoBehaviour:
   resolutionDropdown: {fileID: 837365128}
   qualityDropdown: {fileID: 328392879}
   fullScreenToggle: {fileID: 1405063793}
+  resolutionsV2: []
 --- !u!114 &1383990057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7463,7 +7478,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 322592498}
-  - component: {fileID: 1572660676}
   m_Layer: 5
   m_Name: MenuButtons
   m_TagString: Untagged
@@ -7471,29 +7485,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1572660676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11486960, guid: 45616935e4fe10f48b62da1347801a16,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1572660675}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 2
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
 --- !u!1 &1572808370
 GameObject:
   m_ObjectHideFlags: 0
@@ -9332,10 +9323,10 @@ RectTransform:
   m_Father: {fileID: 322592498}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 83.003006, y: -72.87817}
-  m_SizeDelta: {x: 166.00601, y: 27.551266}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -35}
+  m_SizeDelta: {x: 165, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832536257
 MonoBehaviour:
@@ -10277,10 +10268,10 @@ RectTransform:
   m_Father: {fileID: 322592498}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 83.003006, y: -13.775633}
-  m_SizeDelta: {x: 166.00601, y: 27.551266}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 105.00001}
+  m_SizeDelta: {x: 165, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1985958852
 GameObject:
@@ -11332,9 +11323,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.85
-  m_Text: 'GAME
-
-    TITLE'
+  m_Text: GAME NAME
 --- !u!222 &2071237969
 CanvasRenderer:
   m_ObjectHideFlags: 0
