@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 [RequireComponent(typeof(GameObject))]
 public class Player : MonoBehaviour
@@ -38,8 +37,6 @@ public class Player : MonoBehaviour
 
     Vector2 targetNormal = Vector2.zero;
 
-
-
     void Start()
     {
         controller = GetComponent<Controller2D>();
@@ -70,8 +67,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
-
 
     public void OnJump(bool keyDown)
     {
@@ -131,16 +126,19 @@ public class Player : MonoBehaviour
         {
             if (wallDirX == directionalInput.x)
             {
+                Debug.Log("a");
                 velocity.x = -wallDirX * wallJumpClimb.x;
                 velocity.y = wallJumpClimb.y;
             }
             else if (directionalInput.x == 0)
             {
+                Debug.Log("b");
                 velocity.x = -wallDirX * wallJumpOff.x;
                 velocity.y = wallJumpOff.y;
             }
             else
             {
+                Debug.Log("c");
                 velocity.x = -wallDirX * wallLeap.x;
                 velocity.y = wallLeap.y;
             }
