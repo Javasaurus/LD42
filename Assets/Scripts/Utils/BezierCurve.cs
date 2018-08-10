@@ -5,16 +5,16 @@ using UnityEngine;
 public class BezierCurve
 {
 
-    public static List<Vector3> CalculateCurve(Vector3[] controlPoints, int segments)
+    public static Vector3[] CalculateCurve(Vector3[] controlPoints, int segments)
     {
-        List<Vector3> curvePoints = new List<Vector3>();
-        curvePoints.Add(controlPoints[0]);
-        for (int i = 1; i <= segments; i++)
+        Vector3[] curvePoints = new Vector3[segments];
+        curvePoints[0] = controlPoints[0];
+        for (int i = 1; i < segments; i++)
         {
             float t = i / (float)segments;
-            curvePoints.Add(CalculateCubicBezierPoint(t, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]));
+            curvePoints[i] = (CalculateCubicBezierPoint(t, controlPoints[0], controlPoints[1], controlPoints[2], controlPoints[3]));
         }
-        curvePoints.Add(controlPoints[3]);
+        curvePoints[segments - 1] = controlPoints[3];
         return curvePoints;
     }
 
