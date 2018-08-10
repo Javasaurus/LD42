@@ -5,8 +5,8 @@ public class TimeKeeper : MonoBehaviour
 {
     public static TimeKeeper Instance;
 
-    public float inGameSpeed = 5;                           // The factor to speed up the game with
-    public TimeSpan GameTime = new TimeSpan();              // Current adjusted game time
+    public float inGameSpeed = 5;                                     // The factor to speed up the game with
+    public TimeSpan GameTime = new TimeSpan();                        // Current adjusted game time
     [Range(0, 10000)] float gameSeconds = 0;                          // Accumulated 'Game Time' in seconds ---> LOAD THIS FROM A SAVE FILE LATER
 
     void Awake()
@@ -28,7 +28,7 @@ public class TimeKeeper : MonoBehaviour
         {
             gameSeconds += Time.deltaTime / (1f/ inGameSpeed);
         }
-        GameTime = TimeSpan.FromSeconds(gameSeconds);       // Convert to a usable format
+        GameTime = TimeSpan.FromSeconds(gameSeconds);                 // Convert to a usable format
     }
 
 

@@ -1,4 +1,4 @@
 ﻿Start button is pink when not hovered over
 music slider glitch line 25 set audio levels
 text buttons in options overflow
-screen res not changeable. only max option allowed
+theres music and audio that came with the game jam template which should be replaced
