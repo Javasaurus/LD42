@@ -22,7 +22,6 @@ public class HighScores : MonoBehaviour
     //boolean indicating weather the upload / download of highscores has finished
     public bool isReady;
 
-
     //DELEGATES IN CASE ACTIONS ARE FINISHED OR FAILED (upload/download etc)
     public delegate void OnUploadSuccess();
     public OnUploadSuccess onUploadSuccess;

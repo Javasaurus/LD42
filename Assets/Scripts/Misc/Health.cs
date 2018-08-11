@@ -3,6 +3,7 @@
 public class Health : MonoBehaviour
 {
 
+    public GameObject deathUI;
     public GameObject heartIcon;
 
     public Transform heartsParent;
@@ -51,7 +52,8 @@ public class Health : MonoBehaviour
 
     public void Gameover()
     {
-        Debug.Log("You ded lol");
+        deathUI.SetActive(true);
+        Time.timeScale = 0;
     }
 
 }
