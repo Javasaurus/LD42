@@ -38,20 +38,6 @@ public class Health : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Heart")
-        {
-            Destroy(collision.gameObject);
-            HeartPickup();
-        }
-        //if (collision.gameObject.tag == "Enemy")
-        //{
-        //    currDamage = 1;
-        //    DamagePlayer();
-        //}
-    }
-
     [ContextMenu("Recover")]
     public void HeartPickup()
     {
@@ -65,7 +51,7 @@ public class Health : MonoBehaviour
 
     public void Gameover()
     {
-//        Debug.Log("You ded lol");
+        Debug.Log("You ded lol");
     }
 
 }
