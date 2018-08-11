@@ -772,6 +772,7 @@ GameObject:
   - component: {fileID: 1202732423}
   - component: {fileID: 1202732422}
   - component: {fileID: 1202732425}
+  - component: {fileID: 1202732429}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -858,7 +859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heartIcon: {fileID: 1493116413861210, guid: 3d5de7c9bcbbc47dbafaeabe804dcb22, type: 2}
-  heartObj: {fileID: 1322289253}
   heartsParent: {fileID: 1235230844}
   currDamage: 1
   startingHearts: 2
@@ -918,6 +918,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1202732429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1202732421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74802166c86044476ba1230a49cc4c52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerDamage: 4
 --- !u!1 &1235230843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,6 +1110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   en: {fileID: 0}
+  enemyHealth: 0
+  heartObj: {fileID: 0}
 --- !u!1001 &1801835641
 Prefab:
   m_ObjectHideFlags: 0

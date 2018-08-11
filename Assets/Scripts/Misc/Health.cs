@@ -4,7 +4,6 @@ public class Health : MonoBehaviour
 {
 
     public GameObject heartIcon;
-    public GameObject heartObj;
 
     public Transform heartsParent;
 
@@ -63,14 +62,6 @@ public class Health : MonoBehaviour
     public void Gameover()
     {
         Debug.Log("You ded lol");
-    }
-
-    public void EnemyHeart(GameObject enemy)
-    {
-        if (Random.value > enemy.GetComponent<EnemyController>().en.dropChance)
-        {
-            Instantiate(heartObj, enemy.transform.position, Quaternion.identity);
-        }
     }
 
 }
