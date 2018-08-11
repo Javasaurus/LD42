@@ -5,4 +5,6 @@ We need better canvas scaling
 jetpack movement is jittery
 inconsistent jetpack gravity
 Input field at end doesnt take input
+leaderboard set score page never loads
 bad saves get override by good saves of save name (no login system)
+better death animation

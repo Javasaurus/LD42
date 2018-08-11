@@ -9,6 +9,8 @@ TagManager:
   - Projectile
   - World
   - Jetpack
+  - GameCamera
+  - Jukebox
   layers:
   - Default
   - TransparentFX

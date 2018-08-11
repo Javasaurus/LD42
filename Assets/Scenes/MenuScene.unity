@@ -4798,7 +4798,7 @@ MonoBehaviour:
     username: 
     score: 0
     rank: 2147483647
-  isReady: 1
+  isReady: 0
 --- !u!114 &986510399
 MonoBehaviour:
   m_ObjectHideFlags: 0
