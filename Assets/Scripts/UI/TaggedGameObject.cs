@@ -26,7 +26,7 @@ public class TaggedGameObject : MonoBehaviour
     {
         if (myTag != null)
         {
-            UnityEngine.GameObject.Destroy(myTag.gameObject);
+            Destroy(myTag.gameObject);
         }
     }
 

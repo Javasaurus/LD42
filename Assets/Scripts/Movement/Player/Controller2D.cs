@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using System;
-
 public class Controller2D : RaycastController
 {
 
-    public float maxSlopeAngle = 80;            //The maximal slope that can be climbed
+    public float maxSlopeAngle = 60;            //The maximal slope that can be climbed
     public CollisionInfo collisions;            //The collision information
     [HideInInspector]
     public Vector2 playerInput;
@@ -53,9 +51,7 @@ public class Controller2D : RaycastController
         }
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-
     }
-
 
     void HorizontalCollisions(ref Vector2 moveAmount)
     {
