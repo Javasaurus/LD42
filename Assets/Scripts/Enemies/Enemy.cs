@@ -19,8 +19,8 @@ public class Enemy : ScriptableObject
 
 public enum CombatType
 {
-    SimpleMelee,
-    CircleMelee,
+    Melee,
+    Jukebox,
     OneDirectionRanged,
     ThreeDirectionRanged
 }

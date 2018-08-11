@@ -112,7 +112,7 @@ public class StartOptions : MonoBehaviour
             yield return null;
         }
         Debug.Log("New scene being loaded. Scene index: " + sceneIndex);
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
     }
 
     public void PlayNewMusic()
