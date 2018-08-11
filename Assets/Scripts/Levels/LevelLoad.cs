@@ -13,15 +13,15 @@ public class LevelLoad : MonoBehaviour
 
     void Update()
     {
-             //change this later to, this is for testing
-            if (!Locked)
-            {
-                Unlock();
-            }
-            else
-            {
-                Lock();
-            }   
+        //change this later to, this is for testing
+        if (!Locked)
+        {
+            Unlock();
+        }
+        else
+        {
+            Lock();
+        }
     }
 
     void Lock()
@@ -36,10 +36,5 @@ public class LevelLoad : MonoBehaviour
         Locked = false;
     }
 
-    private void OnMouseDown()
-    {
-        OverworldCharacter owc = GameObject.FindObjectOfType<OverworldCharacter>();
-        owc.OnLevelSelected(this);
-    }
 
 }
