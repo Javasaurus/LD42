@@ -9,7 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b7c467063a294a50965ff276938c844, type: 3}
-  m_Name: Temporary Enemy
+  m_Name: Big Noob
   m_EditorClassIdentifier: 
-  dmg: 1
-  dropChance: 0.443
+  combatType: 3
+  dmg: 2
+  health: 1
+  fireRate: 2.4
+  dropChance: 0.26

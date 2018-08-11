@@ -40,11 +40,21 @@ public class Health : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("ASD");
         if (collision.gameObject.tag == "Heart")
         {
             Destroy(collision.gameObject);
             HeartPickup();
+        }
+        if (collision.gameObject.tag == "Projectile")
+        {
+            currDamage = collision.gameObject.GetComponent<Projectile>().damage;
+            Destroy(collision.gameObject);
+            DamagePlayer();
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+            currDamage = 1;
+            DamagePlayer();
         }
     }
 
