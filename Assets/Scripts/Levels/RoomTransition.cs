@@ -13,18 +13,22 @@ public class RoomTransition : MonoBehaviour
     public float transitionSpeed = 0.5f;                                        // The transition speed
     public Transform playerTransform;                                           // The player 
     public Transform gameCamera;                                                // The game camera
+    public Transform waterRising;                                               // The rising liquid
 
     private float cameraDistanceToMove;                                         // The total distance the camera will move
-                               // arbitrary value for now  
+                                                                                // arbitrary value for now  
     float deltaDistance;                                                        // The distance difference with the last frame
     private float totalDistance = 0;                                            // The total travelled distance (might lead to SOME issues, debug when arise --> solution = to clamp to the totaldistance)
 
+    float liquidRubberBandingOffset = 0;                                        // the distance the liquid starts from at the current rooms
 
 
     private void OnEnable()
     {
         gameCamera = GameObject.FindGameObjectWithTag("GameCamera").transform;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        waterRising = GameObject.FindObjectOfType<WaterRising>().transform;
+        liquidRubberBandingOffset = Mathf.Abs(waterRising.position.y - gameCamera.position.y);
     }
 
     private void Update()
@@ -44,6 +48,7 @@ public class RoomTransition : MonoBehaviour
             }
             else
             {
+                waterRising.transform.position = new Vector3(waterRising.transform.position.x, gameCamera.transform.position.y - liquidRubberBandingOffset, waterRising.transform.position.z);
                 inTransition = false;
                 if (doorAnimation)
                 {

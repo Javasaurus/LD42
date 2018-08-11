@@ -16,13 +16,18 @@ public class LevelGenerator : MonoBehaviour
     public int SEED = 14441;                                    // the seed for the current level ---> players can share seeds
     public int currentLevel = 1;                                // the current level index 
 
+    private WaterRising waterRising;                            // reference to the rising fluids ---> must reset after next level load !
     private Camera gameCamera;                                  // reference to the game camera (to reset to a new level --> avoid camera and player being out of sync after "cutscene")
     private Transform playerTransform;                          // reference to the player
+
     private Dictionary<string, List<GameObject>> roomPrefabs;   // a library of prefabs to chose from 
     private List<GameObject> currentRooms;                      // a list of currently spawned rooms
     private Vector3 currentSpawnPosition = Vector3.zero;        // the current position to spawn a room at
+
+
     private Vector3 initialCameraOffset;                        // the initial camera offset
     private Vector3 initialPlayerOffset;                        // the initial player offset
+    private Vector3 initialLiquidOffset;                        // the initial liquid offset
 
 
 
@@ -35,8 +40,12 @@ public class LevelGenerator : MonoBehaviour
             currentRooms = new List<GameObject>();
             gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            waterRising = GameObject.FindObjectOfType<WaterRising>();
+
             initialCameraOffset = gameCamera.transform.position;
             initialPlayerOffset = playerTransform.transform.position;
+            initialLiquidOffset = waterRising.transform.position;
+
             INSTANCE = this;
             LevelGenerator.initialFixedTimeScale = Time.fixedDeltaTime;
             LevelGenerator.initialTimeScale = Time.timeScale;
@@ -121,6 +130,11 @@ public class LevelGenerator : MonoBehaviour
         currentSpawnPosition = Vector3.zero;
         gameCamera.transform.position = initialCameraOffset;
         playerTransform.position = initialPlayerOffset;
+
+        //reset the liquid as well !
+        waterRising.transform.position = initialLiquidOffset;
+        waterRising.speedIncrease += currentLevel/20;
+        waterRising.risingSpeed = 0;
     }
 
     void OnEnable()
