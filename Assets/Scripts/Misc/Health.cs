@@ -53,7 +53,7 @@ public class Health : MonoBehaviour
     public void Gameover()
     {
         deathUI.SetActive(true);
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
     }
 
 }

@@ -1,6 +1,6 @@
 ﻿music slider glitch line 25 set audio levels
 theres music and audio that came with the game jam template which should be replaced
-UI disappears before fade in. meaning skybox is visible while changing
+UI disappears before fade in. meaning skybox is visible while changing. Game sometimes loads in before fade block.
 We need better canvas scaling
 jetpack movement is jittery
 inconsistent jetpack gravity

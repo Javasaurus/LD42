@@ -7,9 +7,18 @@ public class Score : MonoBehaviour
     public int score;
     public InputField inputField;
 
+    HighScores highScores;
+
     public void SubmitScore()
     {
-        GameObject.Find("References").GetComponent<References>().hs.SubmitHighscore(inputField.text, score);
+        if (highScores == null)
+        {
+            highScores = GameObject.Find("References").GetComponent<References>().hs;
+        }
+        highScores.gameObject.SetActive(true);
+        highScores.isReady = true;
+        highScores.SubmitHighscore(inputField.text, score);
+        highScores.gameObject.SetActive(false);
     }
 
 }

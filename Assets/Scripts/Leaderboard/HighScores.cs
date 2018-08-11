@@ -100,14 +100,21 @@ public class HighScores : MonoBehaviour
         {
             StartCoroutine(UploadNewHighscore(username, score));
         }
+        else
+        {
+            Debug.Log("NOT READY !!!!");
+        }
     }
 
     IEnumerator UploadNewHighscore(string username, int score)
     {
+        Debug.Log("ASD");
         isReady = false;
         //this construct a link to the speficic url to add a score to your repository
         WWW www = new WWW(webURL + privateCode + "/add/" + WWW.EscapeURL(username) + "/" + score);
+        Debug.Log("ASDDD");
         yield return www;
+        Debug.Log("ADS");
         //if there is no error (www.error string is empty)...
         if (string.IsNullOrEmpty(www.error))
         {
@@ -120,6 +127,8 @@ public class HighScores : MonoBehaviour
         }
         //at this point we are ready with the upload!
         isReady = true;
+
+        Debug.Log("BAS");
 
     }
 
