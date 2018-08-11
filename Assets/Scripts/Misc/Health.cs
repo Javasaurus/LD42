@@ -45,17 +45,11 @@ public class Health : MonoBehaviour
             Destroy(collision.gameObject);
             HeartPickup();
         }
-        if (collision.gameObject.tag == "Projectile")
-        {
-            currDamage = collision.gameObject.GetComponent<Projectile>().damage;
-            Destroy(collision.gameObject);
-            DamagePlayer();
-        }
-        if (collision.gameObject.tag == "Enemy")
-        {
-            currDamage = 1;
-            DamagePlayer();
-        }
+        //if (collision.gameObject.tag == "Enemy")
+        //{
+        //    currDamage = 1;
+        //    DamagePlayer();
+        //}
     }
 
     [ContextMenu("Recover")]

@@ -31,11 +31,11 @@ public class EnemyController : MonoBehaviour
 
         if (player.position.x > transform.position.x)
         {
-            direction = 1;
+            direction = -1;
         }
         else
         {
-            direction = -1;
+            direction = 1;
         }
 
         if ((en.combatType == CombatType.ThreeDirectionRanged || en.combatType == CombatType.OneDirectionRanged) && timeSinceLastFire + en.fireRate < Time.time)
@@ -66,7 +66,7 @@ public class EnemyController : MonoBehaviour
             instance.GetComponent<Projectile>().damage = en.dmg;
 
             instance = Instantiate(projectile, transform.position, Quaternion.identity);
-            instance.GetComponent<Projectile>().velocity = new Vector2(0, 1);
+            instance.GetComponent<Projectile>().velocity = new Vector2(0, -1);
             instance.GetComponent<Projectile>().damage = en.dmg;
 
         }
