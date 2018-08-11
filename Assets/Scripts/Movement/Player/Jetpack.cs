@@ -21,9 +21,9 @@ public class Jetpack : MonoBehaviour
     {
         if (jetfuel > 0 && Input.GetKeyDown(jetkey))
         {
-            gameObject.GetComponent<Player>().enabled = false;
-            rb.constraints = RigidbodyConstraints2D.None;
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            //gameObject.GetComponent<Player>().enabled = false;
+            //rb.constraints = RigidbodyConstraints2D.None;
+            //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -35,8 +35,8 @@ public class Jetpack : MonoBehaviour
         }
         else
         {
-            gameObject.GetComponent<Player>().enabled = true;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            //gameObject.GetComponent<Player>().enabled = true;
+            //rb.constraints = RigidbodyConstraints2D.FreezeAll;
         }
     }
 
