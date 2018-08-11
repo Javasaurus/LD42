@@ -65,7 +65,7 @@ public class Health : MonoBehaviour
 
     public void Gameover()
     {
-        Debug.Log("You ded lol");
+//        Debug.Log("You ded lol");
     }
 
 }

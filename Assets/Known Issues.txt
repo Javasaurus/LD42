@@ -4,3 +4,5 @@ text buttons in options overflow
 theres music and audio that came with the game jam template which should be replaced
 UI disappears before fade in. meaning skybox is visible while changing
 We need better canvas scaling
+jetpack movement is jittery
+inconsistent jetpack gravity
