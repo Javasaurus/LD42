@@ -72,6 +72,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    [ContextMenu("Death")]
     public void Death()
     {
         if (Random.value > en.dropChance)
