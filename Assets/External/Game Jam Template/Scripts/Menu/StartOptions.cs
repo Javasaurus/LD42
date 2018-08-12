@@ -24,6 +24,9 @@ public class StartOptions : MonoBehaviour
     private ShowPanels showPanels;										//Reference to ShowPanels script on UI GameObject, to show and hide panels
     private CanvasGroup menuCanvasGroup;
 
+    public Vector3 startingPosition;
+
+    public GameObject camerasss;
 
     void Awake()
     {
@@ -43,6 +46,9 @@ public class StartOptions : MonoBehaviour
 
     public void StartButtonClicked()
     {
+
+        camerasss.transform.position = startingPosition;
+
         //If changeMusicOnStart is true, fade out volume of music group of AudioMixer by calling FadeDown function of PlayMusic
         //To change fade time, change length of animation "FadeToColor"
         if (menuSettingsData.musicLoopToChangeTo != null)
