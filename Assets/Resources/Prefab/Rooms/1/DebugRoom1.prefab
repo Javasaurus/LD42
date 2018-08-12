@@ -818,7 +818,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1660987850421280
 GameObject:
   m_ObjectHideFlags: 0
@@ -3123,6 +3123,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sealObject: {fileID: 1655857017963576}
+  collidersToReplace:
+  - {fileID: 1745610681378008}
 --- !u!114 &114412354870466118
 MonoBehaviour:
   m_ObjectHideFlags: 1

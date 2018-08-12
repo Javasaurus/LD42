@@ -7,6 +7,7 @@ public class PistonDoorAnimation : DoorAnimation
 {
     Animator animator;
     public GameObject sealObject;
+    public GameObject[] collidersToReplace;
 
     private void Start()
     {
@@ -27,6 +28,13 @@ public class PistonDoorAnimation : DoorAnimation
     {
         if (sealObject)
         {
+            foreach (GameObject collider in collidersToReplace)
+            {
+                foreach (Collider2D partialCollider in collider.GetComponents<Collider2D>())
+                {
+                    partialCollider.enabled = false;
+                }
+            }
             sealObject.SetActive(true);
         }
         waiting = true;
