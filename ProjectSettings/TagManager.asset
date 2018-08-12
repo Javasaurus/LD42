@@ -10,6 +10,7 @@ TagManager:
   - World
   - Jetpack
   - GameCamera
+  - Enemy
   - Jukebox
   layers:
   - Default

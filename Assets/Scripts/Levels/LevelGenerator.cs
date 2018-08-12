@@ -51,7 +51,15 @@ public class LevelGenerator : MonoBehaviour
             LevelGenerator.initialTimeScale = Time.timeScale;
             Random.InitState(SEED);
 
-            DontDestroyOnLoad(this.gameObject); //--> Why would this reset the current level?
+            /*-------
+
+            I removed this because I restart the game by reloading the scene.
+
+            -------*/
+
+            //DontDestroyOnLoad(this.gameObject); //--> Why would this reset the current level?
+
+
         }
         else
         {

@@ -24,7 +24,7 @@ public class PlayerCollide : MonoBehaviour
             jetpack.jetfuel += collision.gameObject.GetComponent<JetpackRecharge>().fuel;
             Destroy(collision.gameObject);
         }
-        if (collision.gameObject.tag == "Jukebox")
+        if (collision.gameObject.tag == "Enemy")
         {
             health.currDamage = 1;
             health.DamagePlayer();

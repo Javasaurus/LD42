@@ -7,7 +7,5 @@ leaderboard set score page never loads
 bad saves get override by good saves of save name (no login system)
 better death animation
 green light only works on some platforms
-collision between player and enemies
 projectiles go through walls
 path up is blocked by controller
-2 restart methods are conflicting
