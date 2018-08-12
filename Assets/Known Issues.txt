@@ -9,3 +9,6 @@ green light only works on some platforms
 projectiles go through walls
 path up is blocked by controller
 death doesnt happen right if death in tar
+floor now glitches out of ground
+player collider is off when against walls
+tar doesnt cover all objects like it should

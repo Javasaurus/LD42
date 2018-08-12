@@ -34,6 +34,11 @@ public class PlayerCollide : MonoBehaviour
         {
             collision.transform.GetComponent<RoomTransition>().DoPlayerTransition(this.transform);
         }
+        if (collision.gameObject.tag == "Teleporter")
+        {
+            Debug.Log("asd");
+            transform.position = collision.gameObject.GetComponent<Teleporter>().otherLocation.position;
+        }
     }
 
 }
