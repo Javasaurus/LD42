@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - Jukebox
   - Door
+  - Teleporter
   layers:
   - Default
   - TransparentFX
