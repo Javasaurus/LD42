@@ -1736,8 +1736,8 @@ public class PlatformerMotor2D : MonoBehaviour
             minDistanceFromEnv);
 
         Collider2D col = Physics2D.OverlapArea(
-            checkBounds.min, 
-            checkBounds.max, 
+            checkBounds.min,
+            checkBounds.max,
             _collisionMask);
 
         if (col != null)
@@ -1966,7 +1966,7 @@ public class PlatformerMotor2D : MonoBehaviour
         {
             //Debug.Log(IsMovingPlatform(_collidersUpAgainst[DIRECTION_DOWN].gameObject));
         }
-        
+
         if (HasFlag(CollidedSurface.Ground) && IsMovingPlatform(_collidersUpAgainst[DIRECTION_DOWN].gameObject))
         {
             _movingPlatformState.platform = _collidersUpAgainst[DIRECTION_DOWN].GetComponent<MovingPlatformMotor2D>();
@@ -2442,7 +2442,10 @@ public class PlatformerMotor2D : MonoBehaviour
                     }
                     else
                     {
-                        float acceleration = normalizedXMovement * (maxSpeed / timeToGroundSpeed);
+                        float acceleration = normalizedXMovement * (8 * maxSpeed); //timeToGroundSpeed);
+                        //clamp the acceleration to a minimal vlaue for instant movement
+                        acceleration = Mathf.Sign(acceleration) * (Mathf.Max(Mathf.Abs(acceleration), 2f));
+
 
                         if (onSlope && changeSpeedOnSlopes)
                         {

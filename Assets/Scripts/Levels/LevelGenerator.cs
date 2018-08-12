@@ -14,8 +14,7 @@ public class LevelGenerator : MonoBehaviour
     public static float initialFixedTimeScale;                  // the standard time scale value (FOR RIGIDBODIES !!!)
 
     public int SEED = 14441;                                    // the seed for the current level ---> players can share seeds
-    public int currentLevel = 1;                                // the current level index 
-
+    public static int currentLevel = 1;                         // the current level index 
     private WaterRising waterRising;                            // reference to the rising fluids ---> must reset after next level load !
     private Camera gameCamera;                                  // reference to the game camera (to reset to a new level --> avoid camera and player being out of sync after "cutscene")
     private Transform playerTransform;                          // reference to the player
@@ -30,13 +29,33 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 initialLiquidOffset;                        // the initial liquid offset
 
 
+    public static void StoreCurrentLevel()
+    {
+        currentLevel++;
+        PlayerPrefs.SetInt("Current_Level", currentLevel);
+    }
 
+    public static void LoadCurrentLevel()
+    {
+        currentLevel = PlayerPrefs.GetInt("Current_Level");
+        if (currentLevel < 1)
+        {
+            currentLevel = 1;
+        }
+    }
+
+    public static void ResetLevel()
+    {
+        currentLevel = 1;
+        PlayerPrefs.SetInt("Current_Level", currentLevel);
+    }
 
     //we need to load a list of prefabs based on their "difficulty" (from 1-5)
     private void Awake()
     {
         if (INSTANCE == null)
         {
+            LevelGenerator.LoadCurrentLevel();
             currentRooms = new List<GameObject>();
             gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;

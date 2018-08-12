@@ -38,7 +38,7 @@ public class LevelChanger : MonoBehaviour
 
     public void MoveLevel()
     {
-        LevelGenerator.INSTANCE.currentLevel++;
+        LevelGenerator.StoreCurrentLevel();
         OverworldScreen.SetActive(true);
         GameScreen.SetActive(false);
     }

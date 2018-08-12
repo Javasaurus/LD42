@@ -2815,7 +2815,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SEED: 14441
-  currentLevel: 1
 --- !u!4 &1206600530
 Transform:
   m_ObjectHideFlags: 0
