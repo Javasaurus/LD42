@@ -8,3 +8,4 @@ better death animation
 green light only works on some platforms
 projectiles go through walls
 path up is blocked by controller
+death doesnt happen right if death in tar
