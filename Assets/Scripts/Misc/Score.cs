@@ -5,7 +5,7 @@ public class Score : MonoBehaviour
 {
 
     public int score;
-    public InputField inputField;
+    public TMPro.TMP_InputField inputField;
 
     HighScores highScores;
 

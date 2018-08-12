@@ -16,7 +16,6 @@ public class FlexibleUIButton : FlexibleUI
     protected override void OnSkinUI()
     {
         base.OnSkinUI();
-        button.colors = flexibleUIData.buttonColorBlock;
     }
 
 }

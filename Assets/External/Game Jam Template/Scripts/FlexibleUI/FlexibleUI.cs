@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class FlexibleUI : MonoBehaviour {
 
-    public FlexibleUIData flexibleUIData;
-
     protected virtual void OnSkinUI(){}
 
     public void Initialize()

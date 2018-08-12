@@ -3,28 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
+[RequireComponent(typeof(TMPro.TextMeshProUGUI))]
 public class FlexibleUIText : FlexibleUI
 
 {
-    private Text text;
-    public bool useMainFont = true;
+    private TMPro.TextMeshProUGUI text;
+
 
     void Awake()
     {
-        text = GetComponent<Text>();
+        text = GetComponent<TMPro.TextMeshProUGUI>();
         base.Initialize();
     }
 
     protected override void OnSkinUI()
     {
         base.OnSkinUI();
-        text.color = flexibleUIData.textColor;
-        if (useMainFont)
-        {
-            text.font = flexibleUIData.font;
-        }
-        
+ 
+
     }
 
 
