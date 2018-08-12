@@ -70,7 +70,7 @@ public class Platformer2DUserControl : MonoBehaviour
                 {
                     m_Character.WallJumping = true;
                     //disable the input for a fraction of a second after this?
-                    m_Character.Move(-m_Input.Horizontal * 2.5f, m_Input.Jump);
+                    m_Character.Move(-m_Input.Horizontal, m_Input.Jump);
                     timeOutTimer = Time.time + timeOutDuration;
                 }
             }

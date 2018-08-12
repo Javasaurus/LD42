@@ -106,7 +106,8 @@ public class LevelGenerator : MonoBehaviour
         }
         AddRoom(BOSS_ROOMS);
         //we need to seal the bottom of the first room
-        currentRooms[0].GetComponentInChildren<DoorAnimation>().SealRoom();
+        currentRooms[0].GetComponentInChildren<PistonDoorAnimation>().SealRoom();
+
     }
 
     /// <summary>

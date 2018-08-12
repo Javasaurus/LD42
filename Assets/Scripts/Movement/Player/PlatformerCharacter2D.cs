@@ -100,7 +100,7 @@ public class PlatformerCharacter2D : MonoBehaviour
             {
                 // Add a vertical force to the player.
                 Walled = false;
-                m_Rigidbody2D.AddForce(new Vector2(0f, 2.5f * m_JumpForce));
+                m_Rigidbody2D.AddForce(new Vector2(0f, 1.5f * m_JumpForce));
             }
             else if (Grounded)
             {

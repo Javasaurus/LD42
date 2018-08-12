@@ -16,6 +16,7 @@ public class PistonDoorAnimation : DoorAnimation
 
     public override void SealRoom()
     {
+        animator = GetComponent<Animator>();
         if (animator != null)
         {
             animator.SetBool("Closed", true);
