@@ -5,6 +5,7 @@ We need better canvas scaling
 leaderboard set score page never loads
 bad saves get override by good saves of save name (no login system)
 better death animation
-green light only works on some platforms
+light only works platforms and not walls
 projectiles go through walls
 path up is blocked by controller
+death by tar isnt linked up to main death function
