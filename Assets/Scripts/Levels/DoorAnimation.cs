@@ -16,7 +16,6 @@ public abstract class DoorAnimation : MonoBehaviour
     {
         Time.timeScale = LevelGenerator.initialTimeScale;
         Time.fixedDeltaTime = LevelGenerator.initialFixedTimeScale;
-        FindObjectOfType<Jetpack>().enabled = true;
         this.enabled = false;
     }
 
