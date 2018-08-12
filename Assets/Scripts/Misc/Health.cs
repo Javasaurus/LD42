@@ -37,6 +37,8 @@ public class Health : MonoBehaviour
             Destroy(heartsParent.GetChild(i).gameObject);
         }
 
+        EZCameraShake.CameraShaker.Instance.ShakeOnce(2.9f, 2.7f, 0.1f, 0.7f);
+
     }
 
     [ContextMenu("Recover")]

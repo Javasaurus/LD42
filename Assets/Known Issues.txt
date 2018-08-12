@@ -2,9 +2,12 @@
 theres music and audio that came with the game jam template which should be replaced
 UI disappears before fade in. meaning skybox is visible while changing. Game sometimes loads in before fade block.
 We need better canvas scaling
-jetpack movement is jittery
-inconsistent jetpack gravity
 Input field at end doesnt take input
 leaderboard set score page never loads
 bad saves get override by good saves of save name (no login system)
 better death animation
+green light only works on some platforms
+collision between player and enemies
+projectiles go through walls
+path up is blocked by controller
+2 restart methods are conflicting
