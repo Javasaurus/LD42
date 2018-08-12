@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class RoomTransition : MonoBehaviour
 {
-    public static float playerDistanceToMove = 3f;
+
+    public static float playerDistanceToMove = 2f;
 
     public DoorAnimation doorAnimation;
 
@@ -33,9 +34,10 @@ public class RoomTransition : MonoBehaviour
 
     private void Update()
     {
+       // playerTransform.GetComponent<BoxCollider2D>().enabled = !inTransition;
         if (inTransition)
         {
-
+            //disable the PlatformerCharacter2D ?
             if (totalDistance < cameraDistanceToMove)
             {
                 deltaDistance += (Time.unscaledDeltaTime * transitionSpeed);
@@ -54,13 +56,19 @@ public class RoomTransition : MonoBehaviour
                 {
                     doorAnimation.SealRoom();
                 }
+                else
+                {
+                    //       Time.timeScale = LevelGenerator.initialTimeScale;
+                    //       Time.fixedDeltaTime = LevelGenerator.initialFixedTimeScale;
+                }
+                this.enabled = false;
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Player" && !inTransition)
+        if (collision.tag == "Player" && !inTransition && collision.transform.position.y < transform.position.y)
         {
             //check if we initialized a room
             if (LevelTrigger.currentRoom)
@@ -69,6 +77,8 @@ public class RoomTransition : MonoBehaviour
                 cameraDistanceToMove = LevelTrigger.currentRoom.GetComponent<BoxCollider2D>().bounds.size.y;
                 inTransition = true;
                 playerTransform = collision.transform;
+                FindObjectOfType<Jetpack>().enabled = false;
+                FindObjectOfType<PlatformerCharacter2D>().enabled = true;
                 Time.timeScale = 0;
                 Time.fixedDeltaTime = float.MaxValue;
             }

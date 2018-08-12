@@ -51,10 +51,10 @@ public class Water : MonoBehaviour
         if (Time.time > timer)
         {
             timer = Time.time + delay;
-            int index = Random.Range(1, xpositions.Length-1);
+            int index = Random.Range(1, xpositions.Length - 1);
             Splash(xpositions[index], Random.Range(0, amplitude));
-            GameObject splash = Instantiate(splashPrefab, new Vector3(xpositions[index], 3.14f*colliders[index].bounds.size.y+transform.position.y, transform.position.z), Quaternion.identity);
-            //splash.transform.SetParent(this.transform);
+            GameObject splash = Instantiate(splashPrefab, new Vector3(xpositions[index], 3.14f * colliders[index].bounds.size.y + transform.position.y, transform.position.z), Quaternion.identity);
+            splash.transform.SetParent(this.transform);
             GameObject.Destroy(splash, 2.5f);
         }
 
@@ -152,7 +152,7 @@ public class Water : MonoBehaviour
             meshes[i].triangles = tris;
 
             //Create a holder for the mesh, set it to be the manager's child
-            meshobjects[i] = Instantiate(watermesh, Vector3.zero, Quaternion.identity) as GameObject;
+            meshobjects[i] = Instantiate(watermesh, new Vector3(0, 0, transform.position.z), Quaternion.identity) as GameObject;
             meshobjects[i].GetComponent<MeshFilter>().mesh = meshes[i];
             meshobjects[i].transform.parent = transform;
 
@@ -163,7 +163,7 @@ public class Water : MonoBehaviour
             colliders[i].transform.parent = transform;
 
             //Set the position and scale to the correct dimensions
-            colliders[i].transform.position = new Vector3(Left + Width * (i + 0.5f) / edgecount, Top - 0.5f, 0);
+            colliders[i].transform.position = new Vector3(Left + Width * (i + 0.5f) / edgecount, Top - 0.5f, transform.position.z);
             colliders[i].transform.localScale = new Vector3(Width / edgecount, 0.2f, 1);
 
             //Add a WaterDetector and make sure they're triggers
@@ -240,11 +240,6 @@ public class Water : MonoBehaviour
         UpdateMeshes();
     }
 
-    void OnTriggerStay2D(Collider2D Hit)
-    {
-        //Bonus exercise. Fill in your code here for making things float in your water.
-        //You might want to even include a buoyancy constant unique to each object!
-    }
 
 
 }

@@ -105,6 +105,8 @@ public class LevelGenerator : MonoBehaviour
             AddRoom(currentLevel.ToString());
         }
         AddRoom(BOSS_ROOMS);
+        //we need to seal the bottom of the first room
+        currentRooms[0].GetComponentInChildren<DoorAnimation>().SealRoom();
     }
 
     /// <summary>
@@ -129,11 +131,13 @@ public class LevelGenerator : MonoBehaviour
         currentRooms.Clear();
         currentSpawnPosition = Vector3.zero;
         gameCamera.transform.position = initialCameraOffset;
-        playerTransform.position = initialPlayerOffset;
-
+        if (playerTransform != null)
+        {
+            playerTransform.position = initialPlayerOffset;
+        }
         //reset the liquid as well !
         waterRising.transform.position = initialLiquidOffset;
-        waterRising.speedIncrease += currentLevel/20;
+        waterRising.speedIncrease += currentLevel / 20;
         waterRising.risingSpeed = 0;
     }
 

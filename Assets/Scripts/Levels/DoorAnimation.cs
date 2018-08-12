@@ -12,10 +12,11 @@ public abstract class DoorAnimation : MonoBehaviour
     /// <summary>
     /// Resumes the game
     /// </summary>
-    protected void Resume()
+    protected virtual void Resume()
     {
         Time.timeScale = LevelGenerator.initialTimeScale;
         Time.fixedDeltaTime = LevelGenerator.initialFixedTimeScale;
+        FindObjectOfType<Jetpack>().enabled = true;
         this.enabled = false;
     }
 

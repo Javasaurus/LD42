@@ -18,14 +18,18 @@ public class DebugDoorAnimation : DoorAnimation
 
     IEnumerator WaitForAnimation()
     {
-        yield return new WaitForSecondsRealtime(2f);
-        Resume();
+        yield return new WaitForSecondsRealtime(0.5f);
+       
     }
 
     IEnumerator WaitForFloorClose()
     {
-        yield return new WaitForSecondsRealtime(2f);
-        sealObject.SetActive(true);
+        yield return new WaitForSecondsRealtime(1f);
+        if (sealObject)
+        {
+            sealObject.SetActive(true);
+        }
+        Resume();
         StartCoroutine(WaitForAnimation());
     }
 

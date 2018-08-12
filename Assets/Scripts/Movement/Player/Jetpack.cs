@@ -1,42 +1,44 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(CharacterInput))]
 public class Jetpack : MonoBehaviour
 {
+    public bool JetPackActivated;
 
-    public KeyCode jetkey;
-    public KeyCode left;
-    public KeyCode right;
     public float jetfuel;
     public float jetup;
     public float xSpeed;
 
+    CharacterInput m_Input;
+    RigidbodyConstraints2D constraints;
     Rigidbody2D rb;
 
     void Start()
     {
+        m_Input = GetComponent<CharacterInput>();
         rb = GetComponent<Rigidbody2D>();
+        constraints = rb.constraints;
     }
 
     void Update()
     {
-        if (jetfuel > 0 && Input.GetKeyDown(jetkey))
+        if (jetfuel > 0 & m_Input.Vertical > 0.05f)
         {
-            gameObject.GetComponent<Player>().enabled = false;
-            rb.constraints = RigidbodyConstraints2D.None;
+            gameObject.GetComponent<PlatformerCharacter2D>().enabled = false;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
     void FixedUpdate()
     {
-        if (jetfuel > 0 && Input.GetKey(jetkey))
+        if ((jetfuel > 0 & m_Input.Vertical > 0.05f))
         {
             Inflight();
         }
         else
         {
-            gameObject.GetComponent<Player>().enabled = true;
-            rb.constraints = RigidbodyConstraints2D.FreezeAll;
+            gameObject.GetComponent<PlatformerCharacter2D>().enabled = true;
+            rb.constraints = constraints;
         }
     }
 
@@ -44,15 +46,20 @@ public class Jetpack : MonoBehaviour
     {
         Vector2 desiredDirection = new Vector2();
         jetfuel -= Time.deltaTime;
-        if (Input.GetKey(left))
+        if (Mathf.Abs(m_Input.Horizontal) > 0.05)
         {
-            desiredDirection.x -= xSpeed;
+            desiredDirection.x += (Mathf.Sign(m_Input.Horizontal) * xSpeed);
         }
-        if (Input.GetKey(right))
+        else
         {
-            desiredDirection.x += xSpeed;
+            desiredDirection.x *= 0.85f;
+            if (Mathf.Abs(desiredDirection.x) < 0.05f)
+            {
+                desiredDirection.x = 0;
+            }
         }
-        desiredDirection.y = jetup;
+        JetPackActivated = true;
+        desiredDirection.y = jetup * m_Input.Vertical;
         rb.MovePosition(rb.position + desiredDirection * Time.fixedDeltaTime);
     }
 
