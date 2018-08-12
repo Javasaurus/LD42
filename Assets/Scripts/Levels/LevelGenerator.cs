@@ -110,25 +110,26 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            AddRoom(currentLevel.ToString());
+            AddRoom(currentLevel.ToString()).name = "Level_" + currentLevel + "_" + (i + 1);
         }
-        AddRoom(BOSS_ROOMS);
+        AddRoom(BOSS_ROOMS).name = "Level_" + currentLevel + "_Boss";
         //we need to seal the bottom of the first room
         currentRooms[0].GetComponentInChildren<PistonDoorAnimation>().SealRoom();
-
+        LevelTrigger.currentRoom = currentRooms[0].GetComponent<LevelTrigger>();
     }
 
     /// <summary>
     /// Add a random room for the identifier provided
     /// </summary>
     /// <param name="identifier"></param>
-    void AddRoom(string identifier)
+    GameObject AddRoom(string identifier)
     {
         GameObject roomPrefab = roomPrefabs[identifier][Random.Range(0, roomPrefabs[identifier].Count)];
         GameObject roomInstance = Instantiate(roomPrefab, transform);
         roomInstance.transform.position = currentSpawnPosition;
         currentSpawnPosition = new Vector3(currentSpawnPosition.x, currentSpawnPosition.y + roomInstance.GetComponent<BoxCollider2D>().bounds.size.y, currentSpawnPosition.z);
         currentRooms.Add(roomInstance);
+        return roomInstance;
     }
 
     private void OnDisable()

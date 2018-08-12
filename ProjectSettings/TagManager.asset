@@ -12,6 +12,7 @@ TagManager:
   - GameCamera
   - Enemy
   - Jukebox
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Player
   - World
   - StaticPlatform
-  - 
+  - Door
   - 
   - 
   - 

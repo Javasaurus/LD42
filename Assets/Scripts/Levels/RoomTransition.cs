@@ -26,7 +26,8 @@ public class RoomTransition : MonoBehaviour
 
     private void OnEnable()
     {
-        gameCamera = GameObject.FindGameObjectWithTag("GameCamera").transform;
+        //grab the parent instead of the camera itself
+        gameCamera = GameObject.FindGameObjectWithTag("GameCamera").transform.parent;
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         waterRising = GameObject.FindObjectOfType<WaterRising>().transform;
         liquidRubberBandingOffset = Mathf.Abs(waterRising.position.y - gameCamera.position.y);
@@ -34,7 +35,7 @@ public class RoomTransition : MonoBehaviour
 
     private void Update()
     {
-       // playerTransform.GetComponent<BoxCollider2D>().enabled = !inTransition;
+        // playerTransform.GetComponent<BoxCollider2D>().enabled = !inTransition;
         if (inTransition)
         {
             //disable the PlatformerCharacter2D ?
@@ -66,23 +67,19 @@ public class RoomTransition : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    public void DoPlayerTransition(Transform player)
     {
-        if (collision.tag == "Player" && !inTransition && collision.transform.position.y < transform.position.y)
-        {
-            //check if we initialized a room
-            if (LevelTrigger.currentRoom)
-            {
-                //we should remove all stored speeds for the rigidbody of the player
-                cameraDistanceToMove = LevelTrigger.currentRoom.GetComponent<BoxCollider2D>().bounds.size.y;
-                inTransition = true;
-                playerTransform = collision.transform;
-                FindObjectOfType<Jetpack>().enabled = false;
-                FindObjectOfType<PlatformerCharacter2D>().enabled = true;
-                Time.timeScale = 0;
-                Time.fixedDeltaTime = float.MaxValue;
-            }
-        }
+        //we should remove all stored speeds for the rigidbody of the player
+
+        cameraDistanceToMove = LevelTrigger.currentRoom.GetComponent<BoxCollider2D>().bounds.size.y;
+        Debug.Log("Moving the camera " + cameraDistanceToMove + " from " + LevelTrigger.currentRoom.name);
+        inTransition = true;
+        playerTransform = player;
+        //    FindObjectOfType<Jetpack>().enabled = false;
+        //    FindObjectOfType<PlatformerCharacter2D>().enabled = true;
+        Time.timeScale = 0;
+        Time.fixedDeltaTime = float.MaxValue;
+
     }
 
 

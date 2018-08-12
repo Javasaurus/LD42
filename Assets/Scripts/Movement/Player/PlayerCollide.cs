@@ -30,6 +30,10 @@ public class PlayerCollide : MonoBehaviour
             health.DamagePlayer();
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.tag == "Door")
+        {
+            collision.transform.GetComponent<RoomTransition>().DoPlayerTransition(this.transform);
+        }
     }
 
 }
