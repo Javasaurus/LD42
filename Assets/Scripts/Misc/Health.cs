@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
 
     public GameObject deathUI;
     public GameObject heartIcon;
+
+    public Sprite good, bad;
 
     public Transform heartsParent;
 
@@ -34,9 +37,17 @@ public class Health : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < currDamage; i++)
+        for (int i = 0; i < maxHearts; i++)
         {
-            Destroy(heartsParent.GetChild(i).gameObject);
+            if (i <= hearts - 1)
+            {
+                heartsParent.GetChild(i).GetComponent<Image>().sprite = good;
+            }
+            else
+            {
+                Debug.Log("asd");
+                heartsParent.GetChild(i).GetComponent<Image>().sprite = bad;
+            }
         }
 
         EZCameraShake.CameraShaker.Instance.ShakeOnce(2.9f, 2.7f, 0.1f, 0.7f);
@@ -48,9 +59,17 @@ public class Health : MonoBehaviour
     {
         hearts++;
         hearts = Mathf.Clamp(hearts, 1, maxHearts);
-        if (heartsParent.childCount < 8)
+        for (int i = 0; i < maxHearts; i++)
         {
-            Instantiate(heartIcon, heartsParent);
+            if (i <= hearts - 1)
+            {
+                heartsParent.GetChild(i).GetComponent<Image>().sprite = good;
+            }
+            else
+            {
+                Debug.Log("asd");
+                heartsParent.GetChild(i).GetComponent<Image>().sprite = bad;
+            }
         }
     }
 
