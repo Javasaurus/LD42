@@ -54,10 +54,10 @@ public class EnemyController : MonoBehaviour
 
         if (GetComponent<SpriteRenderer>().sprite == en.bulletTrigger && !fired)
         {
-            RangedFire();
             fired = true;
+            RangedFire();
         }
-        else
+        else if (GetComponent<SpriteRenderer>().sprite != en.bulletTrigger)
         {
             fired = false;
         }
