@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 037d580d0f83f154c8571331fbdefff1
+guid: 96527298f464ab94d9171d02754e8ce8
 TextureImporter:
   fileIDToRecycleName:
-    21300000: crusher_after_attack_idle_0
+    21300000: Compactor_TARGET_0
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -43,7 +43,7 @@ TextureImporter:
   spriteExtrude: 0
   spriteMeshType: 1
   alignment: 7
-  spritePivot: {x: 0, y: 0.5}
+  spritePivot: {x: 0.5, y: 0}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 0
@@ -94,7 +94,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: crusher_after_attack_idle_0
+      name: Compactor_TARGET_0
       rect:
         serializedVersion: 2
         x: 0
@@ -108,7 +108,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ce316b7b40b700459f47567065a217a
+      spriteID: 0271230ed8f50014282279c07a9b2398
       vertices: []
       indices: 
       edges: []
@@ -116,7 +116,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 77184bb15330a034ca354aac0411b309
+    spriteID: 45c5932c2898a4a41b9e9732d84431fc
     vertices: []
     indices: 
     edges: []

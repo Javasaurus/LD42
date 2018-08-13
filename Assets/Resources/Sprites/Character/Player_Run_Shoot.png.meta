@@ -1,30 +1,39 @@
 fileFormatVersion: 2
-guid: da5ab318a8fcee343825cd1762ea4b05
+guid: d7a5bc2da6e94bb4384d905474481bca
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Crusher_idle_strip11_0
-    21300002: Crusher_idle_strip11_1
-    21300004: Crusher_idle_strip11_2
-    21300006: Crusher_idle_strip11_3
-    21300008: Crusher_idle_strip11_4
-    21300010: Crusher_idle_strip11_5
-    21300012: Crusher_idle_strip11_6
-    21300014: Crusher_idle_strip11_7
-    21300016: Crusher_idle_strip11_8
-    21300018: Crusher_idle_strip11_9
-    21300020: Crusher_idle_strip11_10
-    21300022: Crusher_idle_strip11_11
-    21300024: Crusher_idle_strip11_12
-    21300026: Crusher_idle_strip11_13
-    21300028: Crusher_idle_strip11_14
-    21300030: Crusher_idle_strip11_15
-    21300032: Crusher_idle_strip11_16
-    21300034: Crusher_idle_strip11_17
-    21300036: Crusher_idle_strip11_18
-    21300038: Crusher_idle_strip11_19
-    21300040: Crusher_idle_strip11_20
-    21300042: Crusher_idle_strip11_21
-    21300044: Crusher_idle_strip11_22
+    21300000: Player Run_0
+    21300002: Player Run_1
+    21300004: Player Run_2
+    21300006: Player Run_3
+    21300008: Player Run_4
+    21300010: Player Run_5
+    21300012: Player Run_6
+    21300014: Player Run_7
+    21300016: Player Run_8
+    21300018: Player Run_9
+    21300020: Player Run_10
+    21300022: Player Run_11
+    21300024: Player Run_12
+    21300026: Player Run_13
+    21300028: Player Run_14
+    21300030: Player Run_15
+    21300032: Player_Run_Shoot_0
+    21300034: Player_Run_Shoot_1
+    21300036: Player_Run_Shoot_2
+    21300038: Player_Run_Shoot_3
+    21300040: Player_Run_Shoot_4
+    21300042: Player_Run_Shoot_5
+    21300044: Player_Run_Shoot_6
+    21300046: Player_Run_Shoot_7
+    21300048: Player_Run_Shoot_8
+    21300050: Player_Run_Shoot_9
+    21300052: Player_Run_Shoot_10
+    21300054: Player_Run_Shoot_11
+    21300056: Player_Run_Shoot_12
+    21300058: Player_Run_Shoot_13
+    21300060: Player_Run_Shoot_14
+    21300062: Player_Run_Shoot_15
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -64,11 +73,11 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 0
   spriteMeshType: 1
-  alignment: 7
-  spritePivot: {x: 0, y: 0.5}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -81,7 +90,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 2
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -92,7 +101,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: Standalone
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -103,7 +112,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
     buildTarget: WebGL
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -116,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Crusher_idle_strip11_0
+      name: Player_Run_Shoot_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,19 +139,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 174fad01066669d488dbbe2cc02d4484
+      spriteID: a0d020dbd9a891044a7a256bb185b1f3
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_1
+      name: Player_Run_Shoot_1
       rect:
         serializedVersion: 2
-        x: 448
+        x: 48
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,19 +159,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70e7fb0d358e7094c8fc9e0c45224703
+      spriteID: f84343525462e4649ad8d944a5a056c5
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_2
+      name: Player_Run_Shoot_2
       rect:
         serializedVersion: 2
-        x: 896
+        x: 96
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,19 +179,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 748edff102fa85f47941f30e8735babb
+      spriteID: 1354319793a094048b8dfa06c29f2000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_3
+      name: Player_Run_Shoot_3
       rect:
         serializedVersion: 2
-        x: 1344
+        x: 144
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,19 +199,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d60b1fa418b570e45ad2fa00f430c6d5
+      spriteID: 06aaf4fe49dba4446b04f790a44a042f
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_4
+      name: Player_Run_Shoot_4
       rect:
         serializedVersion: 2
-        x: 1792
+        x: 192
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -210,19 +219,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65df6cbba5093c14db139b7415278800
+      spriteID: 77509701ecbe9a446a203576ea34ceb0
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_5
+      name: Player_Run_Shoot_5
       rect:
         serializedVersion: 2
-        x: 2240
+        x: 240
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,19 +239,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 786de4b4f4e2ae74a88928e619d63baf
+      spriteID: ff02c136288b50047add60a03ddc0d7d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_6
+      name: Player_Run_Shoot_6
       rect:
         serializedVersion: 2
-        x: 2688
+        x: 288
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -250,19 +259,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a30a0e52005d9eb439d2d111965d2064
+      spriteID: c104d3b1db8588e45ae2670c0172001a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_7
+      name: Player_Run_Shoot_7
       rect:
         serializedVersion: 2
-        x: 3136
+        x: 336
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -270,19 +279,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 754d48345aa0cbd468ece6a678cfb280
+      spriteID: 33128850d71033748b8f16cf60cd534e
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_8
+      name: Player_Run_Shoot_8
       rect:
         serializedVersion: 2
-        x: 3584
+        x: 384
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,19 +299,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c18761f2c475acb4d9ce4a67a795fcc5
+      spriteID: d12613bfac5601444933f7b373c29d51
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_9
+      name: Player_Run_Shoot_9
       rect:
         serializedVersion: 2
-        x: 4032
+        x: 432
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,19 +319,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b3000ce1b824d1441b806cd731ecc3fb
+      spriteID: b29c390e8e3b76147952423e1783229d
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Crusher_idle_strip11_10
+      name: Player_Run_Shoot_10
       rect:
         serializedVersion: 2
-        x: 4480
+        x: 480
         y: 0
-        width: 448
-        height: 96
+        width: 48
+        height: 32
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -330,7 +339,107 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af8ba1d45e2728342ab09ca072614801
+      spriteID: eef046753d85b4e4796196f37bfdf24c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Run_Shoot_11
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 0
+        width: 48
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c45b791c670f94680b114b27e6c3f6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Run_Shoot_12
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 48
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 596e509d745f03f418f9ab3fb1be0a5c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Run_Shoot_13
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 0
+        width: 48
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e9f166107453bc4e9ead4d3eb190289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Run_Shoot_14
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 48
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b445da2715d3549acf40e27abafd97
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Run_Shoot_15
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 48
+        height: 32
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d675e9facb0dce64583d22e9a8993b5a
       vertices: []
       indices: 
       edges: []
@@ -338,7 +447,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 23f1c84e757044840a821d6f2fc13bf5
+    spriteID: 2ba66b8b28f2c7647afc0ddec1f49f76
     vertices: []
     indices: 
     edges: []
