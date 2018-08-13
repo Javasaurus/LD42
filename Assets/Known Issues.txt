@@ -10,4 +10,4 @@ projectiles go through walls
 cant advance through rooms
 floor glitches out of ground
 tar doesnt cover all objects like it should
-death buttons are fucked
+death leaderboard button doesnt work well and causes rest of game to glitch

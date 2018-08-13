@@ -32,10 +32,17 @@ public class EnemyController : MonoBehaviour
         if (player.position.x > transform.position.x)
         {
             direction = -1;
+            Vector3 theScale = transform.localScale;
+            theScale.x = 3;
+            transform.localScale = theScale;
+
         }
         else
         {
             direction = 1;
+            Vector3 theScale = transform.localScale;
+            theScale.x = -3;
+            transform.localScale = theScale;
         }
 
         if ((en.combatType == CombatType.ThreeDirectionRanged || en.combatType == CombatType.OneDirectionRanged) && timeSinceLastFire + en.fireRate < Time.time)
@@ -53,6 +60,19 @@ public class EnemyController : MonoBehaviour
             GameObject instance = Instantiate(projectile, transform.position, Quaternion.identity);
             instance.GetComponent<Projectile>().velocity = new Vector2(direction, 0);
             instance.GetComponent<Projectile>().damage = en.dmg;
+            if(player.position.x > transform.position.x)
+            {
+                Vector3 theScale = instance.transform.localScale;
+                theScale.x = 2;
+                instance.transform.localScale = theScale;
+
+            }
+            else
+            {
+                Vector3 theScale = instance.transform.localScale;
+                theScale.x = -2;
+                instance.transform.localScale = theScale;
+            }
         }
         else
         {
