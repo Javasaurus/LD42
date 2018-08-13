@@ -10,7 +10,8 @@ public class Enemy : ScriptableObject
 
     public int dmg = 1;
     public int health;
-    public float fireRate;
+
+    public Sprite bulletTrigger;
 
     [Range(0, 1)]
     public float dropChance;

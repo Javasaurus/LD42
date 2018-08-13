@@ -28,7 +28,7 @@ public class PlayerCollide : MonoBehaviour
         {
             health.currDamage = 1;
             health.DamagePlayer();
-            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<EnemyController>().Death();
         }
     }
 
