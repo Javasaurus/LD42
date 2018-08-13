@@ -12,10 +12,11 @@ public class ExplodingBarrel : MonoBehaviour
     public bool explode;
 
     private bool exploding;
-
+    Vector3 spawn;
     void SetExploding()
     {
-        exploding = true;
+        Debug.Log("BOOOM");
+        m_Animator.SetBool("Explode", true);
     }
 
     Animator m_Animator;
@@ -24,20 +25,36 @@ public class ExplodingBarrel : MonoBehaviour
     void Start()
     {
         m_Animator = GetComponent<Animator>();
+        spawn = transform.position;
+    }
+
+    IEnumerator ReActivate(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Instantiate(this, spawn, Quaternion.identity, transform.parent);
+        GameObject.Destroy(this.gameObject);
+    }
+
+    void ReSpawnMe()
+    {
+        m_Animator.SetBool("Explode", false);
+        explode = false;
+        exploding = false;
+        StartCoroutine(ReActivate(Random.Range(3f, 5f)));
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
         if (timeTillDetonation < 0)
         {
+            SetExploding();
             GameObject.Destroy(this, 2f);
             this.enabled = false;
         }
-        else if (explode)
-        {
-            m_Animator.SetBool("Explode", true);
-        }
+
         else
         {
             m_Animator.SetBool("Activate", isActive);
@@ -47,6 +64,7 @@ public class ExplodingBarrel : MonoBehaviour
                 m_Animator.SetFloat("TimeLeft", timeTillDetonation);
             }
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -62,7 +80,7 @@ public class ExplodingBarrel : MonoBehaviour
 
         }
         // crusher boss 
-        if (isActive && collision.tag == "CrusherBoss")
+        if (/*isActive &&*/ collision.tag == "CrusherBoss")
         {
             SetExploding();
             collision.GetComponent<CrusherBoss>().health--;

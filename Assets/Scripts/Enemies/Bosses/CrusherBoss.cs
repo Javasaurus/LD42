@@ -43,23 +43,40 @@ public class CrusherBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Time.time > AttackTimer) & !attacking)
+        if ((Time.time > AttackTimer) & !attacking && movingRoutine == null)
         {
             MoveToNextPoint();
         }
-
-        if (!attacking && (inPosition || (Mathf.Abs(transform.position.y - playerTransform.position.y) <= playerSensitivity)))
+        else if (retractRoutine != null)
         {
+            //stop moving !
             if (movingRoutine != null)
             {
                 StopCoroutine(movingRoutine);
             }
-            DoAttack();
         }
+        else if (!attacking)
+        {
+            if ((inPosition || (Mathf.Abs(transform.position.y - playerTransform.position.y) <= playerSensitivity)))
+            {
+                if (movingRoutine != null)
+                {
+                    StopCoroutine(movingRoutine);
+                }
+                DoAttack();
+            }
+        }
+
+        if (!inPosition && !attacking && movingRoutine == null)
+        {
+            MoveToNextPoint();
+        }
+
     }
 
     void DoAttack()
     {
+        attacking = true;
         m_Animator.SetTrigger("Attack");
 
     }
@@ -71,16 +88,27 @@ public class CrusherBoss : MonoBehaviour
 
     IEnumerator DoRetract()
     {
-        yield return new WaitForSeconds(health / 3f + Random.Range(MinTimeToRetract, MaxTimeToRetract));
         m_Animator.SetTrigger("Retract");
         retractRoutine = null;
+        yield return null;
+    }
+
+    public void ResetAttack()
+    {
+        attacking = false;
+        inPosition = false;
     }
 
     public void ResetTimer()
     {
         attacking = false;
         AttackTimer = Time.time + (health / 3f + Random.Range(MinTimeBetweenAttacks, MaxTimeBetweenAttacks));
-        MoveToNextPoint();
+        if (movingRoutine != null)
+        {
+            StopCoroutine(movingRoutine);
+        }
+        movingRoutine = null;
+
         retractRoutine = null;
     }
 
@@ -110,6 +138,7 @@ public class CrusherBoss : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
         inPosition = true;
+        movingRoutine = null;
         yield return new WaitForSeconds(0.5f);
 
     }
