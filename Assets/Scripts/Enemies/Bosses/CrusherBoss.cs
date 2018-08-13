@@ -17,8 +17,11 @@ public class CrusherBoss : MonoBehaviour
 
     public float playerSensitivity;
 
+    public CrusherTarget crusherTarget;
+
     public Transform playerTransform;
     public Transform BossPivot;
+ 
 
     public Transform[] BossTargetPoints;
     public Transform BossLeftAnchor;
@@ -197,7 +200,6 @@ public class CrusherBoss : MonoBehaviour
             facingRight = true;
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             transform.position += new Vector3(distance, 0);
-
         }
 
 
@@ -216,6 +218,19 @@ public class CrusherBoss : MonoBehaviour
         }
     }
 
+
+    Vector3[] movingPoints;
+    private void OnDrawGizmos()
+    {
+        if (movingPoints != null && movingPoints.Length > 0)
+        {
+            foreach (Vector3 position in movingPoints)
+            {
+                Gizmos.DrawCube(position, Vector3.one);
+            }
+        }
+    }
+
     //move between targets
     public void MoveToOtherSide()
     {
@@ -227,7 +242,7 @@ public class CrusherBoss : MonoBehaviour
         Transform currentAnchor = facingRight ? BossLeftAnchor : BossRightAnchor;
         Transform targetAnchor = facingRight ? BossRightAnchor : BossLeftAnchor;
 
-        Vector3[] movingPoints = new Vector3[4];
+        movingPoints = new Vector3[4];
         movingPoints[0] = new Vector3(currentAnchor.position.x, currentAnchor.position.y + 20f, BossPivot.position.z);
         movingPoints[1] = new Vector3(targetAnchor.position.x, currentAnchor.position.y + 20f, BossPivot.position.z);
         //if we are facing right, that means we need to go outside of the box to make it return horizontally
@@ -268,7 +283,7 @@ public class CrusherBoss : MonoBehaviour
         movingRoutine = null;
         movingToOtherSideRoutine = null;
         yield return new WaitForSeconds(0.5f);
-
+        crusherTarget.transform.position = new Vector3(crusherTarget.transform.position.x, BossPivot.position.y, crusherTarget.transform.position.z);
         ResetTimer();
     }
 

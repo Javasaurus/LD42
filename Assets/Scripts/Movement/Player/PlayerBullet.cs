@@ -37,9 +37,9 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.collider.name);
-        if (collision.collider.tag == "CrusherBoss")
+    if (collision.collider.tag == "CrusherBoss")
         {
+            Debug.Log(collision.collider.name);
             CrusherTarget target = collision.collider.GetComponentInParent<CrusherTarget>();
             if (target)
             {

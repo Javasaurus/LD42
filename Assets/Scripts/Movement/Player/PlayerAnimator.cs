@@ -73,7 +73,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         foreach (Sprite sprite in spriteSheet)
         {
-            if (sprite.name == m_renderer.sprite.name)
+            if (sprite != null && m_renderer.sprite != null && sprite.name == m_renderer.sprite.name)
             {
                 return sprite;
             }
