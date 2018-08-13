@@ -30,10 +30,13 @@ public class PlayerCollide : MonoBehaviour
             health.DamagePlayer();
             Destroy(collision.gameObject);
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
         if (collision.gameObject.tag == "Teleporter")
         {
-            Debug.Log("asd");
-            transform.position = collision.gameObject.GetComponent<Teleporter>().otherLocation.position;
+            transform.position = collision.gameObject.GetComponent<Teleporter>().otherLocation.position + collision.gameObject.GetComponent<Teleporter>().extraPush;
         }
     }
 
