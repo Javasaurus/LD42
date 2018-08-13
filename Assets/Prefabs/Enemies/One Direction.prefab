@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 50003603035177454}
   - component: {fileID: 212613526238003142}
   m_Layer: 0
-  m_Name: Big Noob
+  m_Name: One Direction
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

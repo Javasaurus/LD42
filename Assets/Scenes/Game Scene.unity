@@ -6329,6 +6329,30 @@ Prefab:
       propertyPath: m_Name
       value: CrusherBossTemplate
       objectReference: {fileID: 0}
+    - target: {fileID: 212976361645404748, guid: 4be586fc09947064c8a17156446989e8,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212976361645404748, guid: 4be586fc09947064c8a17156446989e8,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f79fce87f8c643d4a99bf8a9de9528b7,
+        type: 3}
+    - target: {fileID: 4014579520968814, guid: 4be586fc09947064c8a17156446989e8, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4014579520968814, guid: 4be586fc09947064c8a17156446989e8, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 212976361645404748, guid: 4be586fc09947064c8a17156446989e8,
+        type: 2}
+      propertyPath: m_SortingOrder
+      value: -66
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4be586fc09947064c8a17156446989e8, type: 2}
   m_IsPrefabParent: 0

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b7c467063a294a50965ff276938c844, type: 3}
-  m_Name: Super Basic Noob Dude
+  m_Name: Three Direction
   m_EditorClassIdentifier: 
   combatType: 2
   dmg: 1
