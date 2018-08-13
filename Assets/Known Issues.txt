@@ -7,8 +7,7 @@ bad saves get override by good saves of save name (no login system)
 better death animation
 green light only works on some platforms
 projectiles go through walls
-path up is blocked by controller
-death doesnt happen right if death in tar
-floor now glitches out of ground
-player collider is off when against walls
+cant advance through rooms
+floor glitches out of ground
 tar doesnt cover all objects like it should
+death leaderboard button doesnt work well and causes rest of game to glitch
