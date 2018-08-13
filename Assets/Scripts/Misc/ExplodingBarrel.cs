@@ -13,63 +13,83 @@ public class ExplodingBarrel : MonoBehaviour
 
     private bool exploding;
     Vector3 spawn;
+
+    private bool respawning;
+
     void SetExploding()
     {
-        Debug.Log("BOOOM");
         m_Animator.SetBool("Explode", true);
     }
 
     Animator m_Animator;
 
     // Use this for initialization
+
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         spawn = transform.position;
     }
 
+    IEnumerator RandomActivate()
+    {
+        yield return new WaitForSeconds(Random.Range(5f, 15f));
+        isActive = true;
+    }
+
     IEnumerator ReActivate(float time)
     {
         yield return new WaitForSeconds(time);
-        Instantiate(this, spawn, Quaternion.identity, transform.parent);
-        GameObject.Destroy(this.gameObject);
+        transform.position = spawn;
+        GetComponent<SpriteRenderer>().enabled = true;
+        respawning = false;
     }
 
     void ReSpawnMe()
     {
-        m_Animator.SetBool("Explode", false);
-        explode = false;
-        exploding = false;
-        StartCoroutine(ReActivate(Random.Range(3f, 5f)));
+        if (!respawning)
+        {
+            respawning = true;
+            GetComponent<SpriteRenderer>().enabled = false;
+            m_Animator.SetTrigger("Reset");
+            m_Animator.SetBool("Explode", false);
+            m_Animator.SetBool("Activate", false);
+            m_Animator.SetFloat("TimeLeft", timeTillDetonation);
+            explode = false;
+            exploding = false;
+            StartCoroutine(ReActivate(Random.Range(3f, 5f)));
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-
-        if (timeTillDetonation < 0)
+        if (!respawning)
         {
-            SetExploding();
-            GameObject.Destroy(this, 2f);
-            this.enabled = false;
-        }
-
-        else
-        {
-            m_Animator.SetBool("Activate", isActive);
-            if (isActive)
+            if (timeTillDetonation < 0)
             {
-                timeTillDetonation -= Time.deltaTime;
-                m_Animator.SetFloat("TimeLeft", timeTillDetonation);
+                SetExploding();
+                this.enabled = false;
+            }
+            else
+            {
+                m_Animator.SetBool("Activate", isActive);
+                if (isActive)
+                {
+                    timeTillDetonation -= Time.deltaTime;
+                    m_Animator.SetFloat("TimeLeft", timeTillDetonation);
+                }
             }
         }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //if a boss collides with the barrel itself OR if the big collider explodes
+        if (respawning)
+        {
+            return;
+        }
 
         if (exploding)
         {
@@ -77,14 +97,20 @@ public class ExplodingBarrel : MonoBehaviour
             {
                 collision.GetComponent<Health>().DamagePlayer();
             }
-
+        }
+        else
+        {
+            if (collision.tag == "PlayerProjectile")
+            {
+                GameObject.Destroy(collision.gameObject);
+                isActive = true;
+            }
         }
         // crusher boss 
         if (/*isActive &&*/ collision.tag == "CrusherBoss")
         {
             SetExploding();
-            collision.GetComponent<CrusherBoss>().health--;
         }
     }
-
 }
+
