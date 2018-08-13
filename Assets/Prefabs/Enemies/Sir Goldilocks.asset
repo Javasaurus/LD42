@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Sir Goldilocks
   m_EditorClassIdentifier: 
   combatType: 2
-  dmg: 2
+  dmg: 1
   health: 1
-  fireRate: 2.4
-  dropChance: 0.26
+  bulletTrigger: {fileID: 21300002, guid: dcca4e4424c08477bb6ffc9ccc525e7a, type: 3}
+  dropChance: 0.112

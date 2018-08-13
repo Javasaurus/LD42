@@ -12,8 +12,9 @@ public class EnemyController : MonoBehaviour
 
     public int enemyHealth;
 
-    float timeSinceLastFire;
+    //float timeSinceLastFire;
     int direction;
+    bool fired;
 
     void Start()
     {
@@ -45,10 +46,20 @@ public class EnemyController : MonoBehaviour
             transform.localScale = theScale;
         }
 
-        if ((en.combatType == CombatType.ThreeDirectionRanged || en.combatType == CombatType.OneDirectionRanged) && timeSinceLastFire + en.fireRate < Time.time)
+        //if ((en.combatType == CombatType.ThreeDirectionRanged || en.combatType == CombatType.OneDirectionRanged) && timeSinceLastFire + en.fireRate < Time.time)
+        //{
+        //    timeSinceLastFire = Time.time;
+        //    RangedFire();
+        //}
+
+        if (GetComponent<SpriteRenderer>().sprite == en.bulletTrigger && !fired)
         {
-            timeSinceLastFire = Time.time;
             RangedFire();
+            fired = true;
+        }
+        else
+        {
+            fired = false;
         }
 
     }
