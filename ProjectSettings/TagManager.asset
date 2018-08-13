@@ -14,6 +14,7 @@ TagManager:
   - Jukebox
   - Door
   - Teleporter
+  - CrusherBoss
   layers:
   - Default
   - TransparentFX

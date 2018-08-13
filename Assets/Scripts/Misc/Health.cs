@@ -13,6 +13,8 @@ public class Health : MonoBehaviour
     public int startingHearts;
     public int maxHearts;
 
+    public int score;
+
     int hearts;
 
     void Awake()
