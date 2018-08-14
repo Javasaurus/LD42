@@ -22,8 +22,14 @@ public class SetAudioLevels : MonoBehaviour
         SetMusicLevel(PreferencesManager.INSTANCE.musicVol);
         SetSfxLevel(PreferencesManager.INSTANCE.sfxVol);
         //here we should also set the sliders to their correct value
-        musicSlider.value = PreferencesManager.INSTANCE.musicVol;
-        sfxSlider.value = PreferencesManager.INSTANCE.sfxVol;
+        if (musicSlider)
+        {
+            musicSlider.value = PreferencesManager.INSTANCE.musicVol;
+        }
+        if (sfxSlider)
+        {
+            sfxSlider.value = PreferencesManager.INSTANCE.sfxVol;
+        }
     }
 
 

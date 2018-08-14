@@ -14,20 +14,20 @@ public class PlayerCollide : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Heart")
-        {
-            Destroy(collision.gameObject);
-            health.HeartPickup();
-        }
-        if (collision.gameObject.tag == "Jetpack")
-        {
-            jetpack.jetfuel += collision.gameObject.GetComponent<JetpackRecharge>().fuel;
-            Destroy(collision.gameObject);
-        }
+        /* if (collision.gameObject.tag == "Heart")
+         {
+             Destroy(collision.gameObject);
+             health.HeartPickup();
+         }
+         if (collision.gameObject.tag == "Jetpack")
+         {
+             jetpack.jetfuel += collision.gameObject.GetComponent<JetpackRecharge>().fuel;
+             Destroy(collision.gameObject);
+         }*/
         if (collision.gameObject.tag == "Enemy")
         {
             health.currDamage = 1;
-            health.DamagePlayer();
+            health.DamagePlayer(1);
             collision.gameObject.GetComponent<EnemyController>().Death();
         }
     }

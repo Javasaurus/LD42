@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 //the link to your "specific" leaderboard is http://dreamlo.com/lb/7lmmwoSpW0C6uK-RHArZ8gAYB1_OBJm0SSnt8foJH6PQ, it has a console 
 //you can use to manage high scores etc
@@ -61,6 +62,7 @@ public class HighScores : MonoBehaviour
     public void OnUploadCompleted()
     {
         Debug.Log("Highscore was submitted !");
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
@@ -77,6 +79,7 @@ public class HighScores : MonoBehaviour
     public void OnUploadFailed()
     {
         Debug.Log("Highscore was NOT submitted !");
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
@@ -85,6 +88,7 @@ public class HighScores : MonoBehaviour
     public void OnDownloadFailed()
     {
         Debug.Log("HighScoresRetrieved were NOT retrieved !");
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
@@ -108,13 +112,10 @@ public class HighScores : MonoBehaviour
 
     IEnumerator UploadNewHighscore(string username, int score)
     {
-        Debug.Log("ASD");
-        isReady = false;
+       isReady = false;
         //this construct a link to the speficic url to add a score to your repository
         WWW www = new WWW(webURL + privateCode + "/add/" + WWW.EscapeURL(username) + "/" + score);
-        Debug.Log("ASDDD");
         yield return www;
-        Debug.Log("ADS");
         //if there is no error (www.error string is empty)...
         if (string.IsNullOrEmpty(www.error))
         {
@@ -127,9 +128,6 @@ public class HighScores : MonoBehaviour
         }
         //at this point we are ready with the upload!
         isReady = true;
-
-        Debug.Log("BAS");
-
     }
 
     /// <summary>

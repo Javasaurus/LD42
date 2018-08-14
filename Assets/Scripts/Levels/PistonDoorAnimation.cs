@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class PistonDoorAnimation : DoorAnimation
 {
     Animator animator;
+    AudioSource m_Audiosource;
     public GameObject sealObject;
     public GameObject[] collidersToReplace;
 
@@ -21,6 +23,18 @@ public class PistonDoorAnimation : DoorAnimation
         if (animator != null)
         {
             animator.SetBool("Closed", true);
+        }
+    }
+
+    public void PlaySoundEffect()
+    {
+        if (m_Audiosource == null)
+        {
+            m_Audiosource = GetComponent<AudioSource>();
+        }
+        if (!m_Audiosource.isPlaying)
+        {
+            m_Audiosource.PlayOneShot(m_Audiosource.clip);
         }
     }
 

@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {
+
+    Animator m_Animator;
 
     public Enemy en;
 
@@ -14,16 +17,18 @@ public class EnemyController : MonoBehaviour
 
     //float timeSinceLastFire;
     int direction;
-    bool fired;
+    public bool fired;
 
     void Start()
     {
+        m_Animator = GetComponent<Animator>();
         enemyHealth = en.health;
-     }
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void Update()
     {
-
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         if (enemyHealth <= 0)
         {
             Death();
@@ -34,7 +39,7 @@ public class EnemyController : MonoBehaviour
         {
             direction = -1;
             Vector3 theScale = transform.localScale;
-            theScale.x = 3;
+            //     theScale.x = 3;
             transform.localScale = theScale;
 
         }
@@ -42,7 +47,7 @@ public class EnemyController : MonoBehaviour
         {
             direction = 1;
             Vector3 theScale = transform.localScale;
-            theScale.x = -3;
+            //     theScale.x = -3;
             transform.localScale = theScale;
         }
 
@@ -54,6 +59,7 @@ public class EnemyController : MonoBehaviour
 
         if (GetComponent<SpriteRenderer>().sprite == en.bulletTrigger && !fired)
         {
+            m_Animator.SetTrigger("Attack");
             RangedFire();
             fired = true;
         }
@@ -71,7 +77,7 @@ public class EnemyController : MonoBehaviour
             GameObject instance = Instantiate(projectile, transform.position, Quaternion.identity);
             instance.GetComponent<Projectile>().velocity = new Vector2(direction, 0);
             instance.GetComponent<Projectile>().damage = en.dmg;
-            if(player.position.x > transform.position.x)
+            if (player.position.x > transform.position.x)
             {
                 Vector3 theScale = instance.transform.localScale;
                 theScale.x = 2;
@@ -106,7 +112,7 @@ public class EnemyController : MonoBehaviour
     [ContextMenu("Death")]
     public void Death()
     {
-        if (Random.value > en.dropChance)
+        if (en != null && Random.value > en.dropChance)
         {
             Instantiate(heartObj, transform.position, Quaternion.identity);
         }

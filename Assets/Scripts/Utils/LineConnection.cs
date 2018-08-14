@@ -42,8 +42,8 @@ public class LineConnection : MonoBehaviour
 
     public void DrawLine(Vector3[] points)
     {
-        _LineRenderer.startWidth = 0.25f;
-        _LineRenderer.endWidth = 0.25f;
+        _LineRenderer.startWidth = 1.2f;
+        _LineRenderer.endWidth = 1.2f;
         _LineRenderer.positionCount = (segments);
         _LineRenderer.startColor = startColor;
         _LineRenderer.endColor = endColor;

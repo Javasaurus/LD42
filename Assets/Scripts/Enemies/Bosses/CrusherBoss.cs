@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AudioSource))]
 public class CrusherBoss : MonoBehaviour
 {
 
     Animator m_Animator;
+    AudioSource m_Audiosource;
 
     public float health = 100;
     private float maxHealth = 100;
@@ -302,4 +304,17 @@ public class CrusherBoss : MonoBehaviour
         movingRoutine = null;
         yield return new WaitForSeconds(0.5f);
     }
+
+    public void PlayAudio()
+    {
+        if (!m_Audiosource)
+        {
+            m_Audiosource = GetComponent<AudioSource>();
+        }
+        if (!m_Audiosource.isPlaying)
+        {
+            m_Audiosource.PlayOneShot(m_Audiosource.clip);
+        }
+    }
+
 }

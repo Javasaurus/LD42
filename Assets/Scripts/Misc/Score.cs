@@ -5,20 +5,28 @@ public class Score : MonoBehaviour
 {
 
     public int score;
-    public TMPro.TMP_InputField inputField;
+    public TMPro.TextMeshProUGUI scoreField;
+    public TMPro.TextMeshProUGUI inputField;
 
     HighScores highScores;
 
+    private void LateUpdate()
+    {
+        if (scoreField != null)
+        {
+            score = (int)ScoreTimer.score;
+            scoreField.text = score.ToString();
+        }
+    }
+
     public void SubmitScore()
     {
-        if (highScores == null)
-        {
-            highScores = GameObject.Find("References").GetComponent<References>().hs;
-        }
-        highScores.gameObject.SetActive(true);
-        highScores.isReady = true;
+        inputField = GameObject.FindGameObjectWithTag("PlayerHighScoreField").GetComponent<TMPro.TextMeshProUGUI>();
+        highScores = HighScores.INSTANCE;
+        //   highScores.gameObject.SetActive(true);
+        //highScores.isReady = true;
         highScores.SubmitHighscore(inputField.text, score);
-        highScores.gameObject.SetActive(false);
+        //  highScores.gameObject.SetActive(false);
     }
 
 }

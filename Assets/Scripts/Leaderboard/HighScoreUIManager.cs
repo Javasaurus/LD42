@@ -14,12 +14,32 @@ public class HighScoreUIManager : MonoBehaviour
 
     void Start()
     {
-        HighScores.INSTANCE.onDownloadSuccess += OnHighScoreDownloaded;
+        //  HighScores.INSTANCE.onDownloadSuccess += OnHighScoreDownloaded;
+        timer = Time.time + updateDelay;
     }
+
+    float timer = 0f;
+    float updateDelay = 15f;
 
     void LateUpdate()
     {
-        LoadingAnimation.SetActive(!HighScores.INSTANCE.isReady);
+        if (Time.time > timer)
+        {
+            HighScores.INSTANCE.HighScoreTable.Clear();
+            HighScores.INSTANCE.GetHighScores();
+            timer = Time.time + updateDelay;
+        }
+        if (!HighScores.INSTANCE.isReady)
+        {
+            LoadingAnimation.SetActive(true);
+        }
+        else
+        {
+            LoadingAnimation.SetActive(false);
+            textField.text = "";
+            OnHighScoreDownloaded();
+        }
+
     }
 
     public void OnHighScoreDownloaded()
@@ -46,8 +66,6 @@ public class HighScoreUIManager : MonoBehaviour
             {
                 textField.text += score.ToString() + Environment.NewLine;
             }
-
-
         }
         Canvas.ForceUpdateCanvases();
         leaderBoardScrollBar.value = scrollPosition;

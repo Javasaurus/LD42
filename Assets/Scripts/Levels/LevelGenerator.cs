@@ -7,16 +7,20 @@ public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator INSTANCE;                      // the singleton instance for the levelgenerator
 
+    public GameObject EndRoomTemplate;                          // the last room
+
+    public int initialTowerHeight = 5;
 
     private const string BOSS_ROOMS = "BOSS";                   // Identifiers for special rooms (BONUS ?)
 
     public static float initialTimeScale;                       // the standard time scale value
     public static float initialFixedTimeScale;                  // the standard time scale value (FOR RIGIDBODIES !!!)
 
-    public int SEED = 14441;                                    // the seed for the current level ---> players can share seeds
+    public static int SEED = 14441;                             // the seed for the current level ---> players can share seeds
     public static int currentLevel = 1;                         // the current level index 
     private WaterRising waterRising;                            // reference to the rising fluids ---> must reset after next level load !
     private Camera gameCamera;                                  // reference to the game camera (to reset to a new level --> avoid camera and player being out of sync after "cutscene")
+    private Vector3 initialCameraPosition;                      // reference to the initial camera position
     private Transform playerTransform;                          // reference to the player
 
     private Dictionary<string, List<GameObject>> roomPrefabs;   // a library of prefabs to chose from 
@@ -58,6 +62,7 @@ public class LevelGenerator : MonoBehaviour
             LevelGenerator.LoadCurrentLevel();
             currentRooms = new List<GameObject>();
             gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
+            initialCameraPosition = gameCamera.transform.parent.position;
             playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             waterRising = GameObject.FindObjectOfType<WaterRising>();
 
@@ -127,14 +132,33 @@ public class LevelGenerator : MonoBehaviour
     /// </summary>
     void SpawnRooms()
     {
-        for (int i = 0; i < 4; i++)
+        gameCamera.transform.parent.position = initialCameraPosition;
+        currentSpawnPosition = Vector3.zero;
+        //TODO fix later ---> JUST keeping it at 1 for now ... put everything in here and hope nobody notices !
+        currentLevel = 1;
+        for (int i = 0; i < initialTowerHeight; i++)
         {
             AddRoom(currentLevel.ToString()).name = "Level_" + currentLevel + "_" + (i + 1);
         }
-        AddRoom(BOSS_ROOMS).name = "Level_" + currentLevel + "_Boss";
+        if (currentLevel >= 5)
+        {
+            AddRoom(BOSS_ROOMS).name = "Level_" + currentLevel + "_Boss";
+        }
+        else
+        {
+            AddTowerSeal();
+        }
         //we need to seal the bottom of the first room
         currentRooms[0].GetComponentInChildren<PistonDoorAnimation>().SealRoom();
         LevelTrigger.currentRoom = currentRooms[0].GetComponent<LevelTrigger>();
+        //move the player to the spawn of the first room
+        GameObject Player = GameObject.FindObjectOfType<Health>().gameObject;
+        if (Player)
+        {
+            Player.transform.position = LevelTrigger.currentRoom.spawn.position;
+            Player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
+
     }
 
     /// <summary>
@@ -150,6 +174,19 @@ public class LevelGenerator : MonoBehaviour
         currentRooms.Add(roomInstance);
         return roomInstance;
     }
+
+    /// <summary>
+    /// Add a sealing room for the identifier provided
+    /// </summary>
+    GameObject AddTowerSeal()
+    {
+        GameObject roomInstance = Instantiate(EndRoomTemplate, transform);
+        roomInstance.transform.position = currentSpawnPosition;
+        currentSpawnPosition = new Vector3(currentSpawnPosition.x, currentSpawnPosition.y + roomInstance.GetComponent<BoxCollider2D>().bounds.size.y, currentSpawnPosition.z);
+        currentRooms.Add(roomInstance);
+        return roomInstance;
+    }
+
 
     private void OnDisable()
     {

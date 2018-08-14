@@ -1,8 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Collider2D))]
 public class Health : MonoBehaviour
 {
+    public static bool DEAD;
+    Collider2D m_Collider;
+    SpriteRenderer m_Renderer;
 
     public GameObject deathUI;
     public GameObject heartIcon;
@@ -18,63 +24,84 @@ public class Health : MonoBehaviour
 
     public int score;
 
-    int hearts;
+    public int hearts;
+
+    protected bool flashing;
+
+    protected Coroutine flashRoutine;
+    protected Coroutine dieRoutine;
 
     void Awake()
     {
+        m_Collider = GetComponent<Collider2D>();
+        m_Renderer = GetComponent<SpriteRenderer>();
         hearts = startingHearts;
     }
 
-    [ContextMenu("Damage")]
-    public void DamagePlayer()
+    private void LateUpdate()
     {
-
-        hearts -= currDamage;
-
-        if (hearts <= 0)
+        if (hearts < 1)
         {
-            Gameover();
-            return;
+            DEAD = true;
+            HandleDeath();
         }
+    }
 
-        for (int i = 0; i < maxHearts; i++)
+    public void DamagePlayer(int amount)
+    {
+        if (!flashing)
         {
-            if (i <= hearts - 1)
+            EZCameraShake.CameraShaker.Instance.ShakeOnce(2.9f, 2.7f, 0.1f, 0.7f);
+            hearts -= amount;
+            if (hearts > 1)
             {
-                heartsParent.GetChild(i).GetComponent<Image>().sprite = good;
+                if (dieRoutine != null && flashRoutine != null)
+                {
+                    StopCoroutine(flashRoutine);
+                    flashRoutine = null;
+                }
+                flashRoutine = StartCoroutine(Flash(0.1f));
             }
             else
             {
-                Debug.Log("asd");
-                heartsParent.GetChild(i).GetComponent<Image>().sprite = bad;
+                HandleDeath();
             }
         }
-
-        EZCameraShake.CameraShaker.Instance.ShakeOnce(2.9f, 2.7f, 0.1f, 0.7f);
-
     }
 
-    [ContextMenu("Recover")]
-    public void HeartPickup()
+    protected virtual void HandleDeath()
     {
-        hearts++;
-        hearts = Mathf.Clamp(hearts, 1, maxHearts);
-        for (int i = 0; i < maxHearts; i++)
-        {
-            if (i <= hearts - 1)
-            {
-                heartsParent.GetChild(i).GetComponent<Image>().sprite = good;
-            }
-            else
-            {
-                Debug.Log("asd");
-                heartsParent.GetChild(i).GetComponent<Image>().sprite = bad;
-            }
-        }
+        Gameover();
     }
+
+
+
+    IEnumerator Flash(float x)
+    {
+        flashing = true;
+        Color tmp = m_Renderer.color;
+        for (int i = 0; i < 10; i++)
+        {
+            m_Renderer.enabled = false;
+            m_Renderer.color = Color.red;
+            yield return new WaitForSeconds(x);
+            m_Renderer.enabled = true;
+            m_Renderer.color = tmp;
+            yield return new WaitForSeconds(x);
+        }
+        flashing = false;
+    }
+
 
     public void Gameover()
     {
+        DEAD = true;
+        StartCoroutine(HandleGameOver());
+    }
+
+    IEnumerator HandleGameOver()
+    {
+        yield return null;
         deathUI.SetActive(true);
         //Time.timeScale = 0;
     }

@@ -51,6 +51,12 @@ public class RoomTransition : MonoBehaviour
             }
             else
             {
+                //Safety bug fix
+                LevelTrigger parentTrigger = GetComponentInParent<LevelTrigger>();
+                if (parentTrigger)
+                {
+                    playerTransform.position = parentTrigger.spawn.position;
+                }
                 waterRising.transform.position = new Vector3(waterRising.transform.position.x, gameCamera.transform.position.y - liquidRubberBandingOffset, waterRising.transform.position.z);
                 inTransition = false;
                 if (doorAnimation)
@@ -70,9 +76,8 @@ public class RoomTransition : MonoBehaviour
     public void DoPlayerTransition(Transform player)
     {
         //we should remove all stored speeds for the rigidbody of the player
-
+        ScoreTimer.score += 1500f;
         cameraDistanceToMove = LevelTrigger.currentRoom.GetComponent<BoxCollider2D>().bounds.size.y;
-        Debug.Log("Moving the camera " + cameraDistanceToMove + " from " + LevelTrigger.currentRoom.name);
         inTransition = true;
         playerTransform = player;
         //    FindObjectOfType<Jetpack>().enabled = false;

@@ -9,7 +9,7 @@ public class PlayerBullet : MonoBehaviour
     public Vector3 direction;
     public float speed;
     public float maxDistanceTravelled = 5f;
-
+    public bool rebounded;
 
     void Start()
     {
@@ -37,7 +37,14 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-    if (collision.collider.tag == "CrusherBoss")
+        bool destroy = true;
+        if (collision.collider.GetComponent<Item>() 
+            || collision.collider.GetComponent<PlayerBullet>())
+        {
+            return;
+        }
+
+        if (collision.collider.tag == "CrusherBoss")
         {
             Debug.Log(collision.collider.name);
             CrusherTarget target = collision.collider.GetComponentInParent<CrusherTarget>();
@@ -46,12 +53,30 @@ public class PlayerBullet : MonoBehaviour
                 target.OnDamage();
             }
         }
+        else if (collision.collider.tag == "Enemy")
+        {
+            BasicEnemy enemyController = collision.collider.GetComponent<BasicEnemy>();
+            if (enemyController)
+            {
+                destroy = enemyController.HandleImpact(this);
+            }
+        }
+        else if (collision.collider.tag == "Player" && rebounded)
+        {
+            Health health = collision.collider.GetComponent<Health>();
+            if (health)
+            {
+                health.DamagePlayer(1);
+                destroy = true;
+            }
+        }
 
         //handle this if the thing we hit has a particular tag/script/whatever it is 
-        PlayerShooting.currentBullets.Remove(this);
-        GameObject.Destroy(this.gameObject);
-
-        //TODO decide where to put this code, for now it's fine here...
+        if (destroy)
+        {
+            PlayerShooting.currentBullets.Remove(this);
+            GameObject.Destroy(this.gameObject);
+        }
 
     }
 

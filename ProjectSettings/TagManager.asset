@@ -17,6 +17,8 @@ TagManager:
   - CrusherBoss
   - Target
   - PlayerProjectile
+  - Obstacle
+  - PlayerHighScoreField
   layers:
   - Default
   - TransparentFX
@@ -32,7 +34,7 @@ TagManager:
   - StaticPlatform
   - Door
   - UIParticles
-  - 
+  - Pickup
   - 
   - 
   - 
