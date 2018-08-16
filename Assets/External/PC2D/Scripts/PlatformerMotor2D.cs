@@ -478,11 +478,11 @@ public class PlatformerMotor2D : MonoBehaviour
     {
         get
         {
-            return IsDashing() ? _dashing.dashDir * GetDashSpeed() : _velocity;
+            return IsDashing() ? _dashing.dashDir * GetDashSpeed() : playerVelocity;
         }
         set
         {
-            _velocity = value;
+            playerVelocity = value;
         }
     }
 
@@ -779,7 +779,7 @@ public class PlatformerMotor2D : MonoBehaviour
             _dashing.pressed = false;
             _dashing.gravityEnabledFrames = GetFrameCount(endDashNoGravityDuration);
 
-            _velocity = _dashing.dashDir * GetDashSpeed();
+            playerVelocity = _dashing.dashDir * GetDashSpeed();
 
             ChangeState(IsGrounded() ? MotorState.OnGround : MotorState.Falling);
         }
@@ -907,8 +907,8 @@ public class PlatformerMotor2D : MonoBehaviour
     // When enter freedom state velocity is reset, so no inertia
     public void FreedomStateEnter()
     {
-        _velocity.y = 0;
-        _velocity.x = 0;
+        playerVelocity.y = 0;
+        playerVelocity.x = 0;
         _ignoreGravity = true;
         ChangeState(MotorState.FreedomState);
     }
@@ -1019,8 +1019,8 @@ public class PlatformerMotor2D : MonoBehaviour
     {
         return (HasFlag(CollidedSurface.Ground) || onSlope) &&
                !IsJumping() &&
-               (onSlope && Vector2.Dot(_velocity, slopeNormal) <= NEAR_ZERO ||
-               _velocity.y <= NEAR_ZERO);
+               (onSlope && Vector2.Dot(playerVelocity, slopeNormal) <= NEAR_ZERO ||
+               playerVelocity.y <= NEAR_ZERO);
     }
 
     ///<summary>
@@ -1079,7 +1079,7 @@ public class PlatformerMotor2D : MonoBehaviour
 
     // This is the unconverted motor velocity. This ignores slopes. It is converted into the appropriate vector before
     // moving.
-    private Vector2 _velocity;
+    public Vector2 playerVelocity;
 
     // The function is cached to avoid unnecessary memory allocation.
     private EasingFunctions.EasingFunc _dashFunction;
@@ -1247,7 +1247,7 @@ public class PlatformerMotor2D : MonoBehaviour
     {
         if (_rigidbody2D != null)
         {
-            _velocity = _rigidbody2D.velocity;
+            playerVelocity = _rigidbody2D.velocity;
             _originalKinematic = _rigidbody2D.isKinematic;
             _rigidbody2D.isKinematic = true;
         }
@@ -1257,7 +1257,7 @@ public class PlatformerMotor2D : MonoBehaviour
     {
         if (_rigidbody2D != null)
         {
-            _rigidbody2D.velocity = _velocity;
+            _rigidbody2D.velocity = playerVelocity;
             _rigidbody2D.isKinematic = _originalKinematic;
         }
     }
@@ -1380,11 +1380,11 @@ public class PlatformerMotor2D : MonoBehaviour
                     float increaseBy = -slopeDir.y * fastFallGravityMultiplier *
                         Mathf.Abs(Physics2D.gravity.y) * GetDeltaTime();
 
-                    _velocity += slopeDir * increaseBy;
+                    playerVelocity += slopeDir * increaseBy;
 
-                    if (Vector2.Dot(GetMovementDir(_velocity.x), slopeDir) > NEAR_ZERO)
+                    if (Vector2.Dot(GetMovementDir(playerVelocity.x), slopeDir) > NEAR_ZERO)
                     {
-                        _velocity = Vector2.ClampMagnitude(_velocity, -slopeDir.y * fastFallSpeed);
+                        playerVelocity = Vector2.ClampMagnitude(playerVelocity, -slopeDir.y * fastFallSpeed);
                     }
                 }
                 else
@@ -1392,11 +1392,11 @@ public class PlatformerMotor2D : MonoBehaviour
                     float increaseBy = -slopeDir.y * gravityMultiplier *
                         Mathf.Abs(Physics2D.gravity.y) * GetDeltaTime();
 
-                    _velocity += slopeDir * increaseBy;
+                    playerVelocity += slopeDir * increaseBy;
 
-                    if (Vector2.Dot(GetMovementDir(_velocity.x), slopeDir) > NEAR_ZERO)
+                    if (Vector2.Dot(GetMovementDir(playerVelocity.x), slopeDir) > NEAR_ZERO)
                     {
-                        _velocity = Vector2.ClampMagnitude(_velocity, -slopeDir.y * fallSpeed);
+                        playerVelocity = Vector2.ClampMagnitude(playerVelocity, -slopeDir.y * fallSpeed);
                     }
                 }
             }
@@ -1424,7 +1424,7 @@ public class PlatformerMotor2D : MonoBehaviour
 
             float distance = _dashFunction(0, dashDistance, normalizedTime);
 
-            _velocity = _dashing.dashDir * GetDashSpeed();
+            playerVelocity = _dashing.dashDir * GetDashSpeed();
             MovePosition(_collider2D.bounds.center + (Vector3)_dashing.dashDir * (distance - _dashing.distanceCalculated));
             _dashing.distanceCalculated = distance;
             // Right now dash only moves along a line, doesn't ever need to adjust. We don't need multiple iterations for that.
@@ -1432,7 +1432,7 @@ public class PlatformerMotor2D : MonoBehaviour
         }
 
         Vector3 curPos = _collider2D.bounds.center;
-        Vector3 targetPos = _collider2D.bounds.center + (Vector3)_velocity * GetDeltaTime();
+        Vector3 targetPos = _collider2D.bounds.center + (Vector3)playerVelocity * GetDeltaTime();
 
         if (iterationDebug && _currentDeltaTime == Time.fixedDeltaTime)
         {
@@ -1444,7 +1444,7 @@ public class PlatformerMotor2D : MonoBehaviour
             _iterationBounds[1] = b;
         }
 
-        MovePosition(_collider2D.bounds.center + (Vector3)_velocity * GetDeltaTime());
+        MovePosition(_collider2D.bounds.center + (Vector3)playerVelocity * GetDeltaTime());
 
         if (numOfIterations == 1 ||
             (targetPos - _collider2D.bounds.center).sqrMagnitude < DISTANCE_TO_END_ITERATION * DISTANCE_TO_END_ITERATION)
@@ -1508,7 +1508,7 @@ public class PlatformerMotor2D : MonoBehaviour
 
             GetSpeedAndMaxSpeedOnGround(out speed, out maxSpeed);
 
-            _velocity = GetMovementDir(velocity.x) * Mathf.Abs(speed);
+            playerVelocity = GetMovementDir(velocity.x) * Mathf.Abs(speed);
         }
 
         _disallowedSlopeNormal = Vector2.zero;
@@ -1530,7 +1530,7 @@ public class PlatformerMotor2D : MonoBehaviour
                 velocity.sqrMagnitude < minimumSpeedToMoveUpSlipperySlope * minimumSpeedToMoveUpSlipperySlope)
             {
                 // Don't allow.
-                _velocity = Vector3.Project(velocity, slopeNormal);
+                playerVelocity = Vector3.Project(velocity, slopeNormal);
                 _disallowedSlopeNormal = slopeNormal;
                 slopeNormal = currentSlopeNormal;
                 onSlope = currentOnSlope;
@@ -1581,20 +1581,20 @@ public class PlatformerMotor2D : MonoBehaviour
             _jumping.numAirJumps = 0;
         }
 
-        if (_velocity.y > 0 && HasFlag(CollidedSurface.Ceiling))
+        if (playerVelocity.y > 0 && HasFlag(CollidedSurface.Ceiling))
         {
-            _velocity.y = 0;
+            playerVelocity.y = 0;
         }
 
         if (IsGrounded())
         {
             Vector3 slopeDir = GetDownSlopeDir();
 
-            if (IsForceSlipping() && _velocity != Vector2.zero && Mathf.Sign(_velocity.x) == Mathf.Sign(slopeDir.x))
+            if (IsForceSlipping() && playerVelocity != Vector2.zero && Mathf.Sign(playerVelocity.x) == Mathf.Sign(slopeDir.x))
             {
-                float speed = _velocity.magnitude;
+                float speed = playerVelocity.magnitude;
 
-                _velocity = slopeDir * Vector2.Dot(_velocity / speed, slopeDir) * speed;
+                playerVelocity = slopeDir * Vector2.Dot(playerVelocity / speed, slopeDir) * speed;
                 ChangeState(MotorState.Slipping);
             }
             else
@@ -1603,11 +1603,11 @@ public class PlatformerMotor2D : MonoBehaviour
 
                 if (onSlope)
                 {
-                    _velocity = Vector3.Project(velocity, GetDownSlopeDir());
+                    playerVelocity = Vector3.Project(velocity, GetDownSlopeDir());
                 }
                 else
                 {
-                    _velocity.y = 0;
+                    playerVelocity.y = 0;
                 }
             }
         }
@@ -1903,7 +1903,7 @@ public class PlatformerMotor2D : MonoBehaviour
         {
             amountFallen += diffInPositions;
 
-            if (IsFallingFast() && _velocity.y <= -fallSpeed)
+            if (IsFallingFast() && playerVelocity.y <= -fallSpeed)
             {
                 amountFastFallen += diffInPositions;
             }
@@ -1920,7 +1920,7 @@ public class PlatformerMotor2D : MonoBehaviour
         // Jumps
         if (IsJumping())
         {
-            if (_velocity.y <= 0)
+            if (playerVelocity.y <= 0)
             {
                 ChangeState(MotorState.Falling);
             }
@@ -1976,7 +1976,7 @@ public class PlatformerMotor2D : MonoBehaviour
                 if (_movingPlatformState.platform.velocity.y < -fastFallSpeed)
                 {
                     _movingPlatformState.platform = null;
-                    _velocity.y = -fastFallSpeed;
+                    playerVelocity.y = -fastFallSpeed;
                     collidingAgainst &= ~CollidedSurface.Ground;
                 }
             }
@@ -1985,7 +1985,7 @@ public class PlatformerMotor2D : MonoBehaviour
                 if (_movingPlatformState.platform.velocity.y < -fallSpeed)
                 {
                     _movingPlatformState.platform = null;
-                    _velocity.y = -fallSpeed;
+                    playerVelocity.y = -fallSpeed;
                     collidingAgainst &= ~CollidedSurface.Ground;
                 }
             }
@@ -2054,18 +2054,18 @@ public class PlatformerMotor2D : MonoBehaviour
                 // Normal jump.
                 if (IsForceSlipping())
                 {
-                    _velocity = slopeNormal * CalculateSpeedNeeded(_jumping.height);
+                    playerVelocity = slopeNormal * CalculateSpeedNeeded(_jumping.height);
                 }
                 else
                 {
-                    _velocity.y = CalculateSpeedNeeded(_jumping.height);
+                    playerVelocity.y = CalculateSpeedNeeded(_jumping.height);
                 }
             }
             else if (IsOnCorner() ||
                      _jumping.lastValidJump == JumpState.JumpType.Corner && _jumping.jumpGraceFrames >= 0)
             {
                 // If we are on a corner then jump up.
-                _velocity = Vector2.up * CalculateSpeedNeeded(_jumping.height) * cornerJumpMultiplier;
+                playerVelocity = Vector2.up * CalculateSpeedNeeded(_jumping.height) * cornerJumpMultiplier;
                 _ignoreMovementFrames = GetFrameCount(ignoreMovementAfterJump);
 
                 if (onCornerJump != null)
@@ -2078,7 +2078,7 @@ public class PlatformerMotor2D : MonoBehaviour
                 (_isValidWallInteraction && PressingIntoLeftWall())))
             {
                 // If jump was pressed as we or before we entered the wall then just jump away.
-                _velocity = _wallJumpVector * CalculateSpeedNeeded(_jumping.height) * wallJumpMultiplier;
+                playerVelocity = _wallJumpVector * CalculateSpeedNeeded(_jumping.height) * wallJumpMultiplier;
 
                 // It's likely the player is still pressing into the wall, ignore movement for a little amount of time.
                 // TODO: Only ignore left movement?
@@ -2097,8 +2097,8 @@ public class PlatformerMotor2D : MonoBehaviour
                 (_isValidWallInteraction && PressingIntoRightWall())))
             {
 
-                _velocity = _wallJumpVector * CalculateSpeedNeeded(_jumping.height) * wallJumpMultiplier;
-                _velocity.x *= -1;
+                playerVelocity = _wallJumpVector * CalculateSpeedNeeded(_jumping.height) * wallJumpMultiplier;
+                playerVelocity.x *= -1;
 
                 _ignoreMovementFrames = GetFrameCount(ignoreMovementAfterJump);
                 _jumping.numAirJumps = 0;
@@ -2110,7 +2110,7 @@ public class PlatformerMotor2D : MonoBehaviour
             }
             else if (_jumping.numAirJumps < numOfAirJumps)
             {
-                _velocity.y = CalculateSpeedNeeded(_jumping.height);
+                playerVelocity.y = CalculateSpeedNeeded(_jumping.height);
                 _jumping.numAirJumps++;
 
                 if (onAirJump != null)
@@ -2217,7 +2217,7 @@ public class PlatformerMotor2D : MonoBehaviour
         {
             if (IsWallSliding() || _ignoreGravity)
             {
-                _velocity.y = 0;
+                playerVelocity.y = 0;
             }
 
             ChangeState(MotorState.OnGround);
@@ -2237,11 +2237,11 @@ public class PlatformerMotor2D : MonoBehaviour
         // Corner grab?
         if (enableCornerGrabs)
         {
-            if (_isValidWallInteraction && _velocity.y <= 0 && CheckIfAtCorner() && _wallInfo.canHangAgain)
+            if (_isValidWallInteraction && playerVelocity.y <= 0 && CheckIfAtCorner() && _wallInfo.canHangAgain)
             {
                 _wallInfo.cornerHangFrames = GetFrameCount(cornerGrabDuration);
                 _wallInfo.canHangAgain = false;
-                _velocity = Vector2.zero;
+                playerVelocity = Vector2.zero;
                 ChangeState(MotorState.OnCorner);
                 return;
             }
@@ -2250,10 +2250,10 @@ public class PlatformerMotor2D : MonoBehaviour
         // Wall Sticks
         if (enableWallSticks)
         {
-            if (_isValidWallInteraction && _velocity.y <= 0 && (PressingIntoLeftWall() || PressingIntoRightWall()) && _wallInfo.canHangAgain)
+            if (_isValidWallInteraction && playerVelocity.y <= 0 && (PressingIntoLeftWall() || PressingIntoRightWall()) && _wallInfo.canHangAgain)
             {
                 _wallInfo.stickFrames = GetFrameCount(wallSticksDuration);
-                _velocity = Vector2.zero;
+                playerVelocity = Vector2.zero;
                 _wallInfo.canHangAgain = false;
                 ChangeState(MotorState.WallSticking);
                 return;
@@ -2266,7 +2266,7 @@ public class PlatformerMotor2D : MonoBehaviour
             !IsWallSticking() &&
             !IsOnCorner())
         {
-            if (_velocity.y <= 0 && (PressingIntoLeftWall() || PressingIntoRightWall()) && !IsGrounded())
+            if (playerVelocity.y <= 0 && (PressingIntoLeftWall() || PressingIntoRightWall()) && !IsGrounded())
             {
                 ChangeState(MotorState.WallSliding);
             }
@@ -2274,25 +2274,25 @@ public class PlatformerMotor2D : MonoBehaviour
 
         if (IsWallSliding())
         {
-            if (_velocity.y != -wallSlideSpeed)
+            if (playerVelocity.y != -wallSlideSpeed)
             {
                 if (timeToWallSlideSpeed != 0)
                 {
-                    if (_velocity.y > -wallSlideSpeed)
+                    if (playerVelocity.y > -wallSlideSpeed)
                     {
-                        _velocity = Vector2.up * Accelerate(_velocity.y, -wallSlideSpeed / timeToWallSlideSpeed, -wallSlideSpeed);
+                        playerVelocity = Vector2.up * Accelerate(playerVelocity.y, -wallSlideSpeed / timeToWallSlideSpeed, -wallSlideSpeed);
                     }
                     else
                     {
-                        _velocity = Vector2.up * Decelerate(
-                            _velocity.y,
+                        playerVelocity = Vector2.up * Decelerate(
+                            playerVelocity.y,
                             Mathf.Abs(wallSlideSpeed / timeToWallSlideSpeed),
                             -wallSlideSpeed);
                     }
                 }
                 else
                 {
-                    _velocity = Vector2.down * wallSlideSpeed;
+                    playerVelocity = Vector2.down * wallSlideSpeed;
                 }
             }
         }
@@ -2310,27 +2310,27 @@ public class PlatformerMotor2D : MonoBehaviour
             // If we are falling fast then multiply the gravityMultiplier.
             if (fallFast)
             {
-                if (_velocity.y == -fastFallSpeed)
+                if (playerVelocity.y == -fastFallSpeed)
                 {
                     return;
                 }
 
-                if (_velocity.y > -fastFallSpeed)
+                if (playerVelocity.y > -fastFallSpeed)
                 {
-                    _velocity.y = Accelerate(
-                        _velocity.y,
+                    playerVelocity.y = Accelerate(
+                        playerVelocity.y,
                         fastFallGravityMultiplier * Physics2D.gravity.y,
                         -fastFallSpeed);
                 }
                 else
                 {
-                    _velocity.y = Decelerate(
-                        _velocity.y,
+                    playerVelocity.y = Decelerate(
+                        playerVelocity.y,
                         Mathf.Abs(fastFallGravityMultiplier * Physics.gravity.y),
                         -fastFallSpeed);
                 }
 
-                if (_velocity.y <= 0)
+                if (playerVelocity.y <= 0)
                 {
                     ChangeState(MotorState.FallingFast);
                 }
@@ -2339,28 +2339,28 @@ public class PlatformerMotor2D : MonoBehaviour
             {
                 if (_dashing.gravityEnabledFrames < 0)
                 {
-                    if (_velocity.y == -fallSpeed)
+                    if (playerVelocity.y == -fallSpeed)
                     {
                         return;
                     }
 
-                    if (_velocity.y > -fallSpeed)
+                    if (playerVelocity.y > -fallSpeed)
                     {
-                        _velocity.y = Accelerate(
-                            _velocity.y,
+                        playerVelocity.y = Accelerate(
+                            playerVelocity.y,
                             gravityMultiplier * Physics2D.gravity.y,
                             -fallSpeed);
                     }
                     else
                     {
-                        _velocity.y = Decelerate(
-                            _velocity.y,
+                        playerVelocity.y = Decelerate(
+                            playerVelocity.y,
                             Mathf.Abs(gravityMultiplier * Physics.gravity.y),
                             -fallSpeed);
                     }
                 }
 
-                if (_velocity.y <= 0)
+                if (playerVelocity.y <= 0)
                 {
                     ChangeState(MotorState.Falling);
                 }
@@ -2382,8 +2382,8 @@ public class PlatformerMotor2D : MonoBehaviour
         // ladder check
         if (IsOnLadder() && IsUserHandled())
         {
-            _velocity.x = normalizedXMovement * ladderSpeed;
-            _velocity.y = normalizedYMovement * ladderSpeed;
+            playerVelocity.x = normalizedXMovement * ladderSpeed;
+            playerVelocity.y = normalizedYMovement * ladderSpeed;
         }
         // PERF: Optimal math out the window in favor of ease of figuring out, can resolve later if a problem.
         else if (Mathf.Abs(normalizedXMovement) > 0)
@@ -2395,7 +2395,7 @@ public class PlatformerMotor2D : MonoBehaviour
                 if (IsForceSlipping() && Vector2.Dot(moveDir, GetDownSlopeDir()) <= NEAR_ZERO)
                 {
                     // Don't allow walking up a slope that we slide down.
-                    _velocity = GetMovementDir(_velocity.x) * _velocity.magnitude;
+                    playerVelocity = GetMovementDir(playerVelocity.x) * playerVelocity.magnitude;
                     return;
                 }
 
@@ -2473,29 +2473,29 @@ public class PlatformerMotor2D : MonoBehaviour
                     speed = normalizedXMovement * maxSpeed;
                 }
 
-                _velocity = GetMovementDir(speed) * Mathf.Abs(speed);
+                playerVelocity = GetMovementDir(speed) * Mathf.Abs(speed);
             }
             else if (changeDirectionInAir)
             {
                 // Air doesn't have to change how it represents speed.
                 if (timeToAirSpeed > 0)
                 {
-                    if (_velocity.x > 0 &&
+                    if (playerVelocity.x > 0 &&
                         normalizedXMovement > 0 &&
-                        _velocity.x > normalizedXMovement * airSpeed ||
-                        _velocity.x < 0 &&
+                        playerVelocity.x > normalizedXMovement * airSpeed ||
+                        playerVelocity.x < 0 &&
                         normalizedXMovement < 0 &&
-                        _velocity.x < normalizedXMovement * airSpeed)
+                        playerVelocity.x < normalizedXMovement * airSpeed)
                     {
                         speed = Decelerate(
-                            _velocity.x,
+                            playerVelocity.x,
                             (airSpeed * airSpeed) / (2 * airStopDistance),
                             normalizedXMovement * airSpeed);
                     }
                     else
                     {
                         speed = Accelerate(
-                            _velocity.x,
+                            playerVelocity.x,
                             normalizedXMovement * (airSpeed / timeToAirSpeed),
                             normalizedXMovement * airSpeed);
                     }
@@ -2505,10 +2505,10 @@ public class PlatformerMotor2D : MonoBehaviour
                     speed = normalizedXMovement * airSpeed;
                 }
 
-                _velocity.x = speed;
+                playerVelocity.x = speed;
             }
         }
-        else if (_velocity.x != 0)
+        else if (playerVelocity.x != 0)
         {
             if (IsGrounded())
             {
@@ -2524,7 +2524,7 @@ public class PlatformerMotor2D : MonoBehaviour
                         {
                             float factor = (speedMultiplierOnSlope * (1 - slopeNormal.y));
 
-                            if (GetMovementDir(_velocity.x).y > 0)
+                            if (GetMovementDir(playerVelocity.x).y > 0)
                             {
                                 deceleration /= factor;
                             }
@@ -2541,39 +2541,39 @@ public class PlatformerMotor2D : MonoBehaviour
                         speed = 0;
                     }
 
-                    _velocity = GetMovementDir(speed) * Mathf.Abs(speed);
+                    playerVelocity = GetMovementDir(speed) * Mathf.Abs(speed);
                 }
             }
             else
             {
                 if (airStopDistance > 0)
                 {
-                    speed = Decelerate(_velocity.x, (airSpeed * airSpeed) / (2 * airStopDistance), 0);
+                    speed = Decelerate(playerVelocity.x, (airSpeed * airSpeed) / (2 * airStopDistance), 0);
                 }
                 else
                 {
                     speed = 0;
                 }
 
-                _velocity.x = speed;
+                playerVelocity.x = speed;
             }
         }
 
         // These mean we can't progress forward. Either a wall or a slope
         if (HasFlag(CollidedSurface.LeftWall) &&
-            _velocity.x < 0 &&
+            playerVelocity.x < 0 &&
             _collidedNormals[DIRECTION_LEFT] == Vector2.right ||
             HasFlag(CollidedSurface.RightWall) &&
-            _velocity.x > 0 &&
+            playerVelocity.x > 0 &&
             _collidedNormals[DIRECTION_RIGHT] == Vector2.left)
         {
-            _velocity.x = 0;
+            playerVelocity.x = 0;
         }
 
         if (IsGrounded() &&
             _disallowedSlopeNormal != Vector2.zero &&
-            (_disallowedSlopeNormal.x < 0 && _velocity.x > 0 ||
-                _disallowedSlopeNormal.x > 0 && _velocity.x < 0) &&
+            (_disallowedSlopeNormal.x < 0 && playerVelocity.x > 0 ||
+                _disallowedSlopeNormal.x > 0 && playerVelocity.x < 0) &&
             velocity.sqrMagnitude < minimumSpeedToMoveUpSlipperySlope * minimumSpeedToMoveUpSlipperySlope)
         {
             velocity = Vector2.zero;
@@ -2582,11 +2582,11 @@ public class PlatformerMotor2D : MonoBehaviour
 
     private void GetSpeedAndMaxSpeedOnGround(out float speed, out float maxSpeed)
     {
-        Vector3 moveDir = GetMovementDir(_velocity.x);
+        Vector3 moveDir = GetMovementDir(playerVelocity.x);
 
         if (onSlope)
         {
-            speed = velocity.magnitude * Mathf.Sign(_velocity.x);
+            speed = velocity.magnitude * Mathf.Sign(playerVelocity.x);
             Vector3 slopeDir = GetDownSlopeDir();
 
             if (IsForceSlipping() && Vector2.Dot(moveDir, slopeDir) > NEAR_ZERO)
@@ -2623,7 +2623,7 @@ public class PlatformerMotor2D : MonoBehaviour
         }
         else
         {
-            speed = _velocity.x;
+            speed = playerVelocity.x;
             maxSpeed = groundSpeed;
         }
     }
@@ -3039,11 +3039,11 @@ public class PlatformerMotor2D : MonoBehaviour
                 Vector3 oneWayPlatformForward = _hits[i].collider.transform.TransformDirection(Vector3.up);
                 float dot = 0;
 
-                if (_velocity != Vector2.zero)
+                if (playerVelocity != Vector2.zero)
                 {
                     dot = Vector3.Dot(
                         oneWayPlatformForward,
-                        _velocity);
+                        playerVelocity);
                 }
                 else if (((1 << _hits[i].collider.gameObject.layer) & movingPlatformLayerMask) != 0)
                 {
@@ -3116,7 +3116,7 @@ public class PlatformerMotor2D : MonoBehaviour
     {
         CollidedSurface surfaces = CollidedSurface.None;
 
-        Vector2 vecToCheck = _velocity;
+        Vector2 vecToCheck = playerVelocity;
 
         if (!forceCheck)
         {

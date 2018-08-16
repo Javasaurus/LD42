@@ -43,7 +43,7 @@ public class SeekingMissile : MonoBehaviour
     {
         if (collision.tag == "Player" & (!exploded | exploding))
         {
-            collision.GetComponent<Health>().DamagePlayer(1);
+            collision.GetComponent<Health>().DamagePlayer(1, 1);
             m_Animator.SetTrigger("Explode");
             SelfDestruct();
         }
@@ -64,7 +64,7 @@ public class SeekingMissile : MonoBehaviour
     {
         exploded = true;
         GameObject.Destroy(this.gameObject, 1f);
-        ScoreTimer.score += 500f;
+        ScoreTimer.AddScore(500);
     }
 
 }

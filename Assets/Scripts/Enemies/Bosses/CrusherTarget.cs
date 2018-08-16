@@ -33,7 +33,7 @@ public class CrusherTarget : MonoBehaviour
         if (crusherBoss.health <= 0)
         {
             //TRIGGER A CUT SCENE ????
-            LevelTrigger.currentRoom.GetComponent<RoomTransition>().DoPlayerTransition(GameObject.FindGameObjectWithTag("Player").transform);
+    //        LevelTrigger.currentRoom.GetComponent<RoomTransition>().DoPlayerTransition(GameObject.FindGameObjectWithTag("Player").transform);
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Heart : Item
 {
+
+
     public override bool HandleItemEffect(GameObject collider)
     {
         Health health = collider.GetComponent<Health>();
@@ -12,6 +14,14 @@ public class Heart : Item
             health.hearts++;
             return true;
         }
+        else
+        {
+            GetComponent<Collider2D>().enabled = false;
+
+        }
         return false;
     }
+
+
+
 }

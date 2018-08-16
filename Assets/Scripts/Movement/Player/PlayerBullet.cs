@@ -66,7 +66,7 @@ public class PlayerBullet : MonoBehaviour
             Health health = collision.collider.GetComponent<Health>();
             if (health)
             {
-                health.DamagePlayer(1);
+                health.DamagePlayer(1,1);
                 destroy = true;
             }
         }

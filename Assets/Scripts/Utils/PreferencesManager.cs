@@ -14,9 +14,16 @@ public class PreferencesManager : MonoBehaviour
     public int videoResolutionIndex;            //The currently selected resolution index
     public bool videoFullScreen;                //Toggle that enables/disables fullscreen
 
+    public bool ZEN_MODE;
+
+    public void SetZenMode(bool zen)
+    {
+        ZEN_MODE = zen;
+    }
 
     void print()
     {
+        Debug.Log("Zen mode " + ZEN_MODE);
         Debug.Log("Audio Music volume " + musicVol);
         Debug.Log("Audio SFX Volume " + sfxVol);
         Debug.Log("Video Quality " + videoQualityIndex);
@@ -31,7 +38,7 @@ public class PreferencesManager : MonoBehaviour
         {
             INSTANCE = this;
             Load();
-      //      print();
+            //      print();
             GameObject.FindObjectOfType<SetAudioLevels>().Init();
             GameObject.FindObjectOfType<SetVideoSettings>().Init();
         }

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114380771411738784}
   - component: {fileID: 114467722248273706}
   - component: {fileID: 50372755751299146}
-  m_Layer: 9
+  m_Layer: 16
   m_Name: CogBullet
   m_TagString: PlayerProjectile
   m_Icon: {fileID: 0}
@@ -93,6 +93,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   speed: 15
   maxDistanceTravelled: 22.5
+  rebounded: 0
 --- !u!114 &114467722248273706
 MonoBehaviour:
   m_ObjectHideFlags: 1

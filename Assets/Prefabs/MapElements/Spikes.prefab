@@ -78,8 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b539c0c3336004f9c2e0846f3cf9db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBetweenhits: 1.5
   damage: 1
+  attackCount: 3
+  canSubmerge: 0
 --- !u!212 &212733990596764644
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -14,7 +14,7 @@ public class Score : MonoBehaviour
     {
         if (scoreField != null)
         {
-            score = (int)ScoreTimer.score;
+            score = (int)ScoreTimer.GetScore();
             scoreField.text = score.ToString();
         }
     }
@@ -25,7 +25,11 @@ public class Score : MonoBehaviour
         highScores = HighScores.INSTANCE;
         //   highScores.gameObject.SetActive(true);
         //highScores.isReady = true;
-        highScores.SubmitHighscore(inputField.text, score);
+        if (!string.IsNullOrEmpty(inputField.text))
+        {
+            HighScoreUIManager.currentUser = inputField.text;
+            highScores.SubmitHighscore(inputField.text, score);
+        }
         //  highScores.gameObject.SetActive(false);
     }
 

@@ -10,7 +10,7 @@ public class HighScoreUIManager : MonoBehaviour
     public UnityEngine.GameObject LoadingAnimation;                 // A loading indicator (for example text or a spinner)
     public TMPro.TextMeshProUGUI textField;             // A textfield where the highscores will be written to
     public Scrollbar leaderBoardScrollBar;              // The leaderboard's scrollbar (autopositioning to the submitted value)
-    public string currentUser = "";                     // The current user (last one that submitted will be displayed in RED)
+    public static string currentUser = "";                     // The current user (last one that submitted will be displayed in RED)
 
     void Start()
     {
@@ -46,6 +46,8 @@ public class HighScoreUIManager : MonoBehaviour
     {
         List<HighScore> scores = HighScores.INSTANCE.HighScoreTable;
         float scrollPosition = 0f;
+        string header = PreferencesManager.INSTANCE.ZEN_MODE ? "Rank \t Name \t Rooms Cleared" : "Rank \t Name \t Score";
+        textField.text += header + Environment.NewLine;
         foreach (HighScore score in scores)
         {
             if (!string.IsNullOrEmpty(currentUser) && (score.username.ToLower() == currentUser.ToLower()))
@@ -67,9 +69,12 @@ public class HighScoreUIManager : MonoBehaviour
                 textField.text += score.ToString() + Environment.NewLine;
             }
         }
-        Canvas.ForceUpdateCanvases();
-        leaderBoardScrollBar.value = scrollPosition;
-        Canvas.ForceUpdateCanvases();
+        if (!string.IsNullOrEmpty(currentUser))
+        {
+            Canvas.ForceUpdateCanvases();
+            leaderBoardScrollBar.value = scrollPosition;
+            Canvas.ForceUpdateCanvases();
+        }
     }
 
 

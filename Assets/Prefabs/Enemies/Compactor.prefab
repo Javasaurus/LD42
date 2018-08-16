@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 82577635543998638}
   m_Layer: 0
   m_Name: Compactor
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -223,6 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3578701e72ff3746ab4ba6d12abba68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invisible: 0
   enemyHealth: 15
   drops: []
   isAttacking: 0
