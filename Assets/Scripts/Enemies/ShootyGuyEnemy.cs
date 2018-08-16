@@ -6,7 +6,7 @@ public class ShootyGuyEnemy : BasicEnemy
 {
 
     private AudioSource m_Audiosource;
-    float interval = 5f;
+    public float interval = 5f;
     float m_Timer;
     bool hasShot;
 
@@ -16,7 +16,6 @@ public class ShootyGuyEnemy : BasicEnemy
         m_Renderer = GetComponent<SpriteRenderer>();
         m_Collider = GetComponent<Collider2D>();
         m_Timer = Time.time + interval;
-        interval = Random.Range(3f, 6f);
     }
 
     public override void DoAI()
@@ -42,7 +41,7 @@ public class ShootyGuyEnemy : BasicEnemy
         {
             m_Audiosource = GetComponent<AudioSource>();
         }
-        // if (!m_Audiosource.isPlaying)
+       // if (!m_Audiosource.isPlaying)
         {
             m_Audiosource.PlayOneShot(m_Audiosource.clip);
         }

@@ -9,14 +9,13 @@ public class PistonDoorAnimation : DoorAnimation
     Animator animator;
     AudioSource m_Audiosource;
     public GameObject sealObject;
+    public GameObject[] collidersToReplace;
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         animator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
-
-
 
     public override void SealRoom()
     {
@@ -43,7 +42,14 @@ public class PistonDoorAnimation : DoorAnimation
     {
         if (sealObject)
         {
-          sealObject.SetActive(true);
+            foreach (GameObject collider in collidersToReplace)
+            {
+                foreach (Collider2D partialCollider in collider.GetComponents<Collider2D>())
+                {
+                    partialCollider.enabled = false;
+                }
+            }
+            sealObject.SetActive(true);
         }
         waiting = true;
     }

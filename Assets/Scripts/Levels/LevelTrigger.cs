@@ -23,42 +23,34 @@ public class LevelTrigger : MonoBehaviour
 
     void DisableChildren()
     {
-        Debug.Log("Disabled");
         wasActivated = false;
         foreach (Transform child in transform)
         {
-
-            if (child.tag == "Enemy" | child.GetComponent<BasicEnemy>() != null)
+            if ((child.name != "WALLS" && child.name != "DOOR"))
             {
+
                 child.gameObject.SetActive(false);
             }
         }
     }
 
+
     void EnableChildren()
     {
-        Debug.Log("Enabled");
         wasActivated = true;
         foreach (Transform child in transform)
         {
-            if (child.tag == "Enemy" || child.GetComponent<BasicEnemy>() != null)
-                child.gameObject.SetActive(true);
+            child.gameObject.SetActive(true);
         }
     }
 
-
     private void Update()
     {
-        if (wasActivated)
-        {
-            return;
-        }
         //    Debug.Log("We are in room " + currentRoom.name);
-        if ((IsInRoom() | currentRoom == this))
+        if (!wasActivated & (isInRoom() | currentRoom == this))
         {
             EnableChildren();
             currentRoom = this;
-            wasActivated = true;
         }
     }
 
@@ -71,7 +63,7 @@ public class LevelTrigger : MonoBehaviour
           }
       }*/
 
-    private bool IsInRoom()
+    private bool isInRoom()
     {
         return m_Collider.bounds.Contains(m_Player.position);
     }

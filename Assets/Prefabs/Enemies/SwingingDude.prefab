@@ -21,8 +21,8 @@ GameObject:
   - component: {fileID: 4956261724930352}
   - component: {fileID: 212882282937809596}
   - component: {fileID: 95616515671796144}
+  - component: {fileID: 114709601438676240}
   - component: {fileID: 58619042445862238}
-  - component: {fileID: 114505832061704676}
   m_Layer: 0
   m_Name: SwingingDude
   m_TagString: Enemy
@@ -76,7 +76,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114505832061704676
+--- !u!114 &114709601438676240
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -84,19 +84,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1028640176524876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e29642cccdd054141bb8588e5e03f9aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 4264efddb9a834d1ab478188ba322fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invisible: 0
-  enemyHealth: 10
-  drops:
-  - prefab: {fileID: 1161149014892292, guid: 4c083a0655c664b1fbf3d88e13c51577, type: 2}
-    odds: 0.091
-    amount: 4
-  isAttacking: 0
-  facePlayer: 1
-  fastSwingSprite: {fileID: 21300006, guid: dfe81e49de2db604b88da6d963e075c5, type: 3}
-  waitingSprite: {fileID: 21300002, guid: dfe81e49de2db604b88da6d963e075c5, type: 3}
+  en: {fileID: 11400000, guid: 69c23c25ddcad7341b1bdc05d6f92804, type: 2}
+  player: {fileID: 0}
+  projectile: {fileID: 0}
+  heartObj: {fileID: 1161149014892292, guid: 4c083a0655c664b1fbf3d88e13c51577, type: 2}
+  enemyHealth: 5
+  fired: 0
 --- !u!212 &212882282937809596
 SpriteRenderer:
   m_ObjectHideFlags: 1

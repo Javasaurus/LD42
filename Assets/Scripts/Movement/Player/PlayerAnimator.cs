@@ -8,7 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerAnimator : MonoBehaviour
 {
-    public ParticleSystem jumpingParticles;
 
     public PlayerAnimationSprites jumpSprites;
     public PlayerAnimationSprites runSprites;
@@ -107,8 +106,6 @@ public class PlayerAnimator : MonoBehaviour
         m_Animator.SetFloat("VerticalSpeed", vertical);
 
         m_Animator.SetFloat("HorizontalSpeed", horizontal);
-
-        jumpingParticles.gameObject.SetActive(jumping);
     }
 }
 

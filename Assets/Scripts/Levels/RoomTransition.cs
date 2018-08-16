@@ -5,6 +5,8 @@ using UnityEngine;
 public class RoomTransition : MonoBehaviour
 {
 
+    public static float playerDistanceToMove = 2f;
+
     public DoorAnimation doorAnimation;
 
     public Vector3 transitionDirection = new Vector3(0, 1f, 0);                 // The movement direction to transition to
@@ -15,8 +17,7 @@ public class RoomTransition : MonoBehaviour
     public Transform waterRising;                                               // The rising liquid
 
     private float cameraDistanceToMove;                                         // The total distance the camera will move
-    public static float playerDistanceToMove;
-    // arbitrary value for now  
+                                                                                // arbitrary value for now  
     float deltaDistance;                                                        // The distance difference with the last frame
     private float totalDistance = 0;                                            // The total travelled distance (might lead to SOME issues, debug when arise --> solution = to clamp to the totaldistance)
 
@@ -34,7 +35,7 @@ public class RoomTransition : MonoBehaviour
 
     private void Update()
     {
-
+        // playerTransform.GetComponent<BoxCollider2D>().enabled = !inTransition;
         if (inTransition)
         {
             //disable the PlatformerCharacter2D ?
@@ -42,10 +43,20 @@ public class RoomTransition : MonoBehaviour
             {
                 deltaDistance += (Time.unscaledDeltaTime * transitionSpeed);
                 gameCamera.transform.position += transitionDirection * deltaDistance;
+                if (totalDistance < playerDistanceToMove)
+                {
+                    playerTransform.position += transitionDirection * deltaDistance;
+                }
                 totalDistance += deltaDistance;
             }
             else
             {
+                //Safety bug fix
+                LevelTrigger parentTrigger = GetComponentInParent<LevelTrigger>();
+                if (parentTrigger)
+                {
+                    playerTransform.position = parentTrigger.spawn.position;
+                }
                 waterRising.transform.position = new Vector3(waterRising.transform.position.x, gameCamera.transform.position.y - liquidRubberBandingOffset, waterRising.transform.position.z);
                 inTransition = false;
                 if (doorAnimation)
@@ -62,56 +73,20 @@ public class RoomTransition : MonoBehaviour
         }
     }
 
-    public void DoPlayerTransition(Transform player, Collider2D doorCollider)
+    public void DoPlayerTransition(Transform player)
     {
-        if (PreferencesManager.INSTANCE && PreferencesManager.INSTANCE.ZEN_MODE)
-        {
-            LevelGenerator.INSTANCE.ZENROOMS_CLIMBED++;
-        }
-        //stop the player from going down !
-
-        foreach (SeekingMissile missile in FindObjectsOfType<SeekingMissile>())
-        {
-            GameObject.Destroy(missile.gameObject);
-        }
-        foreach (ShootingEnemy shooter in FindObjectsOfType<ShootingEnemy>())
-        {
-            if (!shooter.invisible)
-            {
-                GameObject.Destroy(shooter.gameObject);
-            }
-        }
-
-
         //we should remove all stored speeds for the rigidbody of the player
-        ScoreTimer.AddScore(1500);
+        ScoreTimer.score += 1500f;
         cameraDistanceToMove = LevelTrigger.currentRoom.GetComponent<BoxCollider2D>().bounds.size.y;
-        Collider2D playerCollider = player.GetComponent<BoxCollider2D>();
-
-        float targetY = doorCollider.transform.position.y + playerCollider.bounds.size.y + 0.5f;
-        float targetDistance = Mathf.Abs(player.position.y - targetY);
-
-        Vector3 targetPosition;
-        DoorAnimation animation = doorCollider.GetComponentInChildren<DoorAnimation>();
-        if (animation)
-        {
-            targetPosition = animation.transform.position + Vector3.up * 0.5f;
-        }
-        else
-        {
-            targetPosition = new Vector3(player.position.x, targetY, player.position.z);
-        }
-
-        player.position = targetPosition;
-
         inTransition = true;
         playerTransform = player;
-
         //    FindObjectOfType<Jetpack>().enabled = false;
         //    FindObjectOfType<PlatformerCharacter2D>().enabled = true;
         Time.timeScale = 0;
         Time.fixedDeltaTime = float.MaxValue;
 
     }
+
+
 
 }

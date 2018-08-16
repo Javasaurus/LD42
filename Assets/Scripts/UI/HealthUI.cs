@@ -14,7 +14,7 @@ public class HealthUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_Health = GameObject.FindObjectOfType<PlayerAnimator>().GetComponent<Health>();
+        m_Health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class HealthUI : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-            hearts[i].color = i <= (m_Health.hearts - 1) ? goodColor : badColor;
+            hearts[i].color = i <= m_Health.hearts ? goodColor : badColor;
         }
     }
 }

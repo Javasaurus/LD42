@@ -11,15 +11,9 @@ public class HighScores : MonoBehaviour
     //the static instance (to make sure there is only one of these things contacting the server)
     public static HighScores INSTANCE;
     //Get this from the website
-    const string privateRegCode = "7lmmwoSpW0C6uK-RHArZ8gAYB1_OBJm0SSnt8foJH6PQ";
+    const string privateCode = "7lmmwoSpW0C6uK-RHArZ8gAYB1_OBJm0SSnt8foJH6PQ";
     //Get this from the website
-    const string publicRegCode = "5b674642191a8b0bcc92edaf";
-    //Get this from the website
-    const string privateZenCode = "QynFp5QS-UGL8TIggJXJ3ACW1CN42SDEK9GXMkxFtHAg";
-    //Get this from the website
-    const string publicZenCode = "5b7497eb191a8b0bccd1d9d1";
-
-
+    const string publicCode = "5b674642191a8b0bcc92edaf";
     //the link to the actual repository of scores
     const string webURL = "http://dreamlo.com/lb/";
     //a list of highscore entries
@@ -61,7 +55,6 @@ public class HighScores : MonoBehaviour
             UnityEngine.GameObject.Destroy(this);
         }
     }
-
 
     /// <summary>
     /// Gets called when the scores are succesfully uploaded
@@ -119,9 +112,9 @@ public class HighScores : MonoBehaviour
 
     IEnumerator UploadNewHighscore(string username, int score)
     {
-        isReady = false;
+       isReady = false;
         //this construct a link to the speficic url to add a score to your repository
-        WWW www = (PreferencesManager.INSTANCE && PreferencesManager.INSTANCE.ZEN_MODE) ? new WWW(webURL + privateZenCode + "/add/" + WWW.EscapeURL(username) + "/" + score) : new WWW(webURL + privateRegCode + "/add/" + WWW.EscapeURL(username) + "/" + score);
+        WWW www = new WWW(webURL + privateCode + "/add/" + WWW.EscapeURL(username) + "/" + score);
         yield return www;
         //if there is no error (www.error string is empty)...
         if (string.IsNullOrEmpty(www.error))
@@ -148,7 +141,7 @@ public class HighScores : MonoBehaviour
     IEnumerator DownloadHighscores()
     {
         isReady = false;
-        WWW www = (PreferencesManager.INSTANCE && PreferencesManager.INSTANCE.ZEN_MODE) ? new WWW(webURL + publicZenCode + "/pipe/") : new WWW(webURL + publicRegCode + "/pipe/");
+        WWW www = new WWW(webURL + publicCode + "/pipe/");
         yield return www;
         //we yield the www until it has fully loaded, then we check for error to be empty
         if (string.IsNullOrEmpty(www.error))
@@ -177,7 +170,7 @@ public class HighScores : MonoBehaviour
     IEnumerator DownloadSingleHighscore(string username)
     {
         isReady = false;
-        WWW www = (PreferencesManager.INSTANCE && PreferencesManager.INSTANCE.ZEN_MODE) ? new WWW(webURL + publicZenCode + "/pipe-get/" + username) : new WWW(webURL + publicRegCode + "/pipe-get/" + username);
+        WWW www = new WWW(webURL + publicCode + "/pipe-get/" + username);
         yield return www;
         //we yield the www until it has fully loaded, then we check for error to be empty
         if (string.IsNullOrEmpty(www.error))
@@ -210,7 +203,7 @@ public class HighScores : MonoBehaviour
         string[] entryInfo = line.Split(new char[] { '|' });
         string username = WWW.UnEscapeURL(entryInfo[0]);
         int score = int.Parse(entryInfo[1]);
-        int rank = int.Parse(entryInfo[entryInfo.Length - 1]) + 1;
+        int rank = int.Parse(entryInfo[entryInfo.Length - 1])+1;
         HighScore highScore = new HighScore
         {
             username = username,

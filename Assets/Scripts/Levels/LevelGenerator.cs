@@ -6,10 +6,8 @@ using UnityEngine.SceneManagement;
 public class LevelGenerator : MonoBehaviour
 {
     public static LevelGenerator INSTANCE;                      // the singleton instance for the levelgenerator
-    public int ZENROOMS_CLIMBED = 0;
 
     public GameObject EndRoomTemplate;                          // the last room
-    public GameObject MazeRoom;                                 // a maze room
 
     public int initialTowerHeight = 5;
 
@@ -34,7 +32,6 @@ public class LevelGenerator : MonoBehaviour
     private Vector3 initialPlayerOffset;                        // the initial player offset
     private Vector3 initialLiquidOffset;                        // the initial liquid offset
 
-    private Vector3 currentDoorPosition;                        // the door position 
 
     public static void StoreCurrentLevel()
     {
@@ -57,21 +54,11 @@ public class LevelGenerator : MonoBehaviour
         PlayerPrefs.SetInt("Current_Level", currentLevel);
     }
 
-    public void ReloadLevel()
-    {
-        //basically we use the seed to reconstruct everything
-        OnDisable();
-        //Respawn the rooms
-        SpawnRooms();
-        //Move the player to the initial position
-    }
-
     //we need to load a list of prefabs based on their "difficulty" (from 1-5)
     private void Awake()
     {
         if (INSTANCE == null)
         {
-            ResetLevel();
             LevelGenerator.LoadCurrentLevel();
             currentRooms = new List<GameObject>();
             gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
@@ -94,7 +81,7 @@ public class LevelGenerator : MonoBehaviour
 
             -------*/
 
-            DontDestroyOnLoad(this.gameObject); //--> Why would this reset the current level?
+            //DontDestroyOnLoad(this.gameObject); //--> Why would this reset the current level?
 
 
         }
@@ -140,55 +127,18 @@ public class LevelGenerator : MonoBehaviour
         roomPrefabs.Add(identifier, rooms);
     }
 
-    void SpawnChallengeRooms()
-    {
-        gameCamera.transform.parent.position = initialCameraPosition;
-        currentSpawnPosition = Vector3.zero;
-
-        for (int i = 0; i < 3; i++)
-        {
-            AddMazeRoom();
-        }
-        if (Random.value > 0.3)
-        {
-            AddRoom("1");
-        }
-        else
-        {
-            AddMazeRoom();
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            AddMazeRoom();
-        }
-        AddTowerSeal();
-        //we need to seal the bottom of the first room
-        currentRooms[0].GetComponentInChildren<PistonDoorAnimation>().SealRoom();
-        LevelTrigger.currentRoom = currentRooms[0].GetComponent<LevelTrigger>();
-        //move the player to the spawn of the first room
-        GameObject Player = GameObject.FindObjectOfType<Health>().gameObject;
-        if (Player)
-        {
-            Player.transform.position = LevelTrigger.currentRoom.spawn.position;
-            Player.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        }
-    }
-
     /// <summary>
     /// Spawns rooms for the current level, adds a boss room at the end
     /// </summary>
-    void SpawnNormalRooms()
+    void SpawnRooms()
     {
         gameCamera.transform.parent.position = initialCameraPosition;
         currentSpawnPosition = Vector3.zero;
         //TODO fix later ---> JUST keeping it at 1 for now ... put everything in here and hope nobody notices !
-
-        int tmpToFix = 1;
-        AddMazeRoom();
-        for (int i = 0; i < initialTowerHeight + currentLevel; i++)
+        currentLevel = 1;
+        for (int i = 0; i < initialTowerHeight; i++)
         {
-            AddRoom(tmpToFix.ToString()).name = "Level_" + currentLevel + "_" + (i + 1);
-            AddMazeRoom();
+            AddRoom(currentLevel.ToString()).name = "Level_" + currentLevel + "_" + (i + 1);
         }
         if (currentLevel >= 5)
         {
@@ -222,13 +172,6 @@ public class LevelGenerator : MonoBehaviour
         roomInstance.transform.position = currentSpawnPosition;
         currentSpawnPosition = new Vector3(currentSpawnPosition.x, currentSpawnPosition.y + roomInstance.GetComponent<BoxCollider2D>().bounds.size.y, currentSpawnPosition.z);
         currentRooms.Add(roomInstance);
-        /*    var roomDoorObject = roomInstance.transform.Find("DOOR_TRIGGER").gameObject;
-            if (roomDoorObject.gameObject)
-            {
-                Vector3 tmp = roomDoorObject.gameObject.transform.position;
-                roomDoorObject.gameObject.transform.position = currentDoorPosition;
-                currentDoorPosition = tmp;
-            }*/
         return roomInstance;
     }
 
@@ -244,27 +187,9 @@ public class LevelGenerator : MonoBehaviour
         return roomInstance;
     }
 
-    /// <summary>
-    /// Add a sealing room for the identifier provided
-    /// </summary>
-    GameObject AddMazeRoom()
-    {
-        GameObject roomInstance = Instantiate(MazeRoom, transform);
-        roomInstance.transform.position = currentSpawnPosition;
-        currentSpawnPosition = new Vector3(currentSpawnPosition.x, currentSpawnPosition.y + roomInstance.GetComponent<BoxCollider2D>().bounds.size.y, currentSpawnPosition.z);
-        currentRooms.Add(roomInstance);
-        return roomInstance;
-    }
 
     private void OnDisable()
     {
-        //reset the seed
-        if (PreferencesManager.INSTANCE && !PreferencesManager.INSTANCE.ZEN_MODE)
-        {
-            Random.InitState(42);
-            Random.InitState(SEED);
-        }
-
         foreach (GameObject currentRoom in currentRooms)
         {
             GameObject.Destroy(currentRoom);
@@ -279,22 +204,7 @@ public class LevelGenerator : MonoBehaviour
         //reset the liquid as well !
         waterRising.transform.position = initialLiquidOffset;
         waterRising.speedIncrease += currentLevel / 20;
-        if (PreferencesManager.INSTANCE && !PreferencesManager.INSTANCE.ZEN_MODE)
-        {
-            waterRising.risingSpeed = 0;
-        }
-    }
-
-    void SpawnRooms()
-    {
-        if (PreferencesManager.INSTANCE && !PreferencesManager.INSTANCE.ZEN_MODE)
-        {
-            SpawnNormalRooms();
-        }
-        else
-        {
-            SpawnChallengeRooms();
-        }
+        waterRising.risingSpeed = 0;
     }
 
     void OnEnable()

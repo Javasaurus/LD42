@@ -23,7 +23,7 @@ public class CrusherBoss : MonoBehaviour
 
     public Transform playerTransform;
     public Transform BossPivot;
-
+ 
 
     public Transform[] BossTargetPoints;
     public Transform BossLeftAnchor;
@@ -65,78 +65,55 @@ public class CrusherBoss : MonoBehaviour
     }
 
 
-    private bool handled = false;
-
-    void HandleVictory()
-    {
-        PostGameMessage.END_MESSAGE = "Thank you for playing !";
-        Debug.Log(PostGameMessage.END_MESSAGE);
-        GameObject.FindObjectOfType<Health>().ForceGameOver();
-        gameObject.SetActive(false);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (!handled)
+        healthBar.fillAmount = (health / maxHealth);
+        if (swapping)
         {
-
-            healthBar.fillAmount = (health / maxHealth);
-            if (swapping)
+            attacking = false;
+            if (retractRoutine != null)
             {
-                attacking = false;
-                if (retractRoutine != null)
-                {
-                    StopCoroutine(retractRoutine);
-                }
-                if (movingRoutine != null)
-                {
-                    StopCoroutine(movingRoutine);
-                }
-                AttackTimer = Time.time + 10f;
-                SideSwapTimer = Time.time + 10f;
-                if (health > 0)
-                {
-                    return;
-                }
+                StopCoroutine(retractRoutine);
             }
-
-            if ((Time.time > SideSwapTimer) && !attacking && movingRoutine == null && retractRoutine == null && movingToOtherSideRoutine == null)
+            if (movingRoutine != null)
             {
-                swapping = true;
-                MoveToOtherSide();
+                StopCoroutine(movingRoutine);
             }
-            else if (retractRoutine != null)
-            {
-                //stop moving !
-                if (movingRoutine != null)
-                {
-                    StopCoroutine(movingRoutine);
-                }
-            }
-            else if ((inPosition | !attacking) && AttackTimer < Time.time)
-            {
-                if ((Mathf.Abs(transform.position.y - playerTransform.position.y) <= playerSensitivity))
-                {
-                    if (movingRoutine != null)
-                    {
-                        StopCoroutine(movingRoutine);
-                    }
-                }
-                attacking = true;
-                StartCoroutine(DoDelayedAttack());
-            }
-
-            if (!swapping && !inPosition && !attacking && movingRoutine == null)
-            {
-                MoveToNextPoint();
-            }
-
+            AttackTimer = Time.time + 10f;
+            SideSwapTimer = Time.time + 10f;
+            return;
         }
-        if (health <= 0)
+
+        if ((Time.time > SideSwapTimer) && !attacking && movingRoutine == null && retractRoutine == null && movingToOtherSideRoutine == null)
         {
-            HandleVictory();
-            handled = true;
+            swapping = true;
+            MoveToOtherSide();
+        }
+        else if (retractRoutine != null)
+        {
+            //stop moving !
+            if (movingRoutine != null)
+            {
+                StopCoroutine(movingRoutine);
+            }
+        }
+        else if ((inPosition | !attacking) && AttackTimer < Time.time)
+        {
+            if ((Mathf.Abs(transform.position.y - playerTransform.position.y) <= playerSensitivity))
+            {
+                if (movingRoutine != null)
+                {
+                    StopCoroutine(movingRoutine);
+                }
+            }
+            attacking = true;
+            StartCoroutine(DoDelayedAttack());
+        }
+
+        if (!swapping && !inPosition && !attacking && movingRoutine == null)
+        {
+            MoveToNextPoint();
         }
     }
 
@@ -337,48 +314,6 @@ public class CrusherBoss : MonoBehaviour
         if (!m_Audiosource.isPlaying)
         {
             m_Audiosource.PlayOneShot(m_Audiosource.clip);
-        }
-    }
-
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        OnColission2D(collision);
-    }
-
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        OnColission2D(collision);
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        OnTrigger2D(collision);
-    }
-
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        OnTrigger2D(collision);
-    }
-
-    private void OnColission2D(Collision2D collision)
-    {
-        Debug.Log(collision.collider.name);
-        if (collision.collider.tag == "Player")
-        {
-            collision.collider.GetComponent<Health>().DamagePlayer(1,3);
-        }
-    }
-
-    private void OnTrigger2D(Collider2D collision)
-    {
-        Debug.Log(collision.name);
-        if (collision.tag == "Player")
-        {
-            collision.GetComponent<Health>().DamagePlayer(1,3);
         }
     }
 

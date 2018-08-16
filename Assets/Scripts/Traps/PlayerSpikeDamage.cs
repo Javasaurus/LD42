@@ -5,45 +5,29 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class PlayerSpikeDamage : MonoBehaviour
 {
+    public float timeBetweenhits = 1.5f;
+    private float timer;
+
+
     public int damage = 1;
-    public int attackCount = 3;
-    public bool canSubmerge = false;
 
-    const float damageInterval = 1f;
-    float timer;
 
-    void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        HandleTrigger(collision);
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (canSubmerge)
+        if (Time.time > timer && collision.tag == "Player")
         {
-            HandleTrigger(collision);
-        }
-    }
-
-    void HandleTrigger(Collider2D collision)
-    {
-        if (Time.time > timer)
-        {
-            if (collision.tag == "Player")
+            Health health = collision.GetComponent<Health>();
+            if (health)
             {
-                Health health = collision.GetComponent<Health>();
-                if (health)
+                health.currDamage += damage;
+                health.DamagePlayer(1);
+                timer = Time.time + timeBetweenhits;
+                PlatformerMotor2D tmp = health.GetComponent<PlatformerMotor2D>();
+                if (tmp)
                 {
-                    health.DirectlyDamagePlayer(damage);
-                    PlatformerMotor2D tmp = health.GetComponent<PlatformerMotor2D>();
-                    if (tmp)//&& tmp.playerVelocity.y <= 0)
-                    {
-                        tmp.ForceJump();
-                    }
+                    tmp.ForceJump();
                 }
             }
-            timer = Time.time + damageInterval;
         }
     }
-
 }

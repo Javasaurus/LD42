@@ -8,58 +8,54 @@ public class SwingEnemy : BasicEnemy
     public Sprite fastSwingSprite;
     public Sprite waitingSprite;
 
-    bool isReflecting;
-    float reflectTimer = 0f;
-    float reflectDelay = 5f;
-    float waitingTimer = 0f;
-    float waitingDelay = 3f;
 
-    float attackTimer = 0f;
-    float attackDelay = 2f;
 
     Coroutine stopAttack;
 
-    public void FixedUpdate()
+    public override void DoAI()
     {
-        if (Time.time > reflectTimer)
-        {
-            waitingTimer = Time.time + waitingTimer;
-            isReflecting = false;
-        }
-
-        if (Time.time > waitingTimer)
-        {
-            reflectTimer = Time.time + reflectDelay;
-            isReflecting = true;
-        }
-
-        if (Time.time > attackTimer)
+        if (!isAttacking && Time.time > timer)
         {
             isAttacking = true;
-            StartCoroutine(DisableAttacking());
+            if (normalCount <= 3)
+            {
+                m_Anim.SetTrigger("Attack");
+            }
+            else if (normalCount == 3)
+            {
+                normalCount = 0;
+                m_Anim.SetTrigger("SpecialAttack");
+            }
+            else
+            {
+                m_Anim.enabled = false;
+                m_Renderer.sprite = waitingSprite;
+            }
+            if (stopAttack != null)
+            {
+                stopAttack = StartCoroutine(StopAttacking());
+            }
         }
 
-        m_Anim.SetBool("Attack", isAttacking);
     }
 
-    public IEnumerator DisableAttacking()
+    IEnumerator StopAttacking()
     {
-        yield return new WaitForSecondsRealtime(attackDelay);
-        attackTimer = Time.time + attackDelay;
+        yield return new WaitForSeconds(5f);
+        timer = Time.time + 3f;
         isAttacking = false;
+        stopAttack = null;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    IEnumerator ResetAnimator()
     {
-        if (collision.collider.tag == "Player" && isAttacking)
-        {
-            collision.collider.GetComponent<Health>().DamagePlayer(2, 3);
-        }
+        yield return new WaitForSeconds(0.1f);
+        m_Anim.enabled = true;
     }
 
     public override bool HandleImpact(PlayerBullet bullet)
     {
-        if (isReflecting)
+        if (isAttacking)
         {
             m_Anim.enabled = false;
             Debug.Log("Rebound");
@@ -75,19 +71,5 @@ public class SwingEnemy : BasicEnemy
             return base.HandleImpact(bullet);
         }
     }
-    IEnumerator StopAttacking()
-    {
-        yield return new WaitForSeconds(5f);
-        timer = Time.time + 3f;
-        isAttacking = false;
-        stopAttack = null;
-    }
-
-    IEnumerator ResetAnimator()
-    {
-        yield return new WaitForSeconds(0.1f);
-        m_Anim.enabled = true;
-    }
-
 
 }

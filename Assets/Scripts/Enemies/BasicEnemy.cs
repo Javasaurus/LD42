@@ -8,7 +8,6 @@ using UnityEngine;
 public class BasicEnemy : MonoBehaviour
 {
     public bool invisible;
-    Camera gameCamera;
 
     public int enemyHealth;
     public ItemDrop[] drops;
@@ -30,8 +29,7 @@ public class BasicEnemy : MonoBehaviour
 
     protected int normalCount;
 
-    public bool facePlayer = true;
-    private Transform playerTransform;
+
 
     public virtual void DoAI()
     {
@@ -67,28 +65,9 @@ public class BasicEnemy : MonoBehaviour
         }
     }
 
-    private void CheckBounds()
-    {
-        if (gameCamera == null)
-        {
-            gameCamera = GameObject.FindGameObjectWithTag("GameCamera").GetComponent<Camera>();
-        }
-        //check if we are in view...
-        Vector3 viewPos = gameCamera.WorldToViewportPoint(transform.position);
-        invisible = !(viewPos.x >= 0 && viewPos.x <= 1 && viewPos.y >= 0 && viewPos.y <= 1 && viewPos.z > 0);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (!playerTransform)
-        {
-            playerTransform = GameObject.FindObjectOfType<PlayerAnimator>().transform;
-        }
-        float direction = Mathf.Sign(playerTransform.position.x - transform.position.x);
-        transform.localScale = new Vector3(direction * Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-
-        CheckBounds();
         if (invisible)
         {
             timer += Time.deltaTime;
@@ -171,7 +150,7 @@ public class BasicEnemy : MonoBehaviour
         }
         m_Collider.enabled = true;
         DamageAnimation = false;
-        ScoreTimer.AddScore(5000);
+        ScoreTimer.score += 5000f;
         GameObject.Destroy(this.gameObject);
     }
 
@@ -213,10 +192,7 @@ public class BasicEnemy : MonoBehaviour
     void OnBecameVisible()
     {
         invisible = false;
-        if (m_Anim)
-        {
-            m_Anim.enabled = true;
-        }
+        m_Anim.enabled = true;
         m_Renderer.enabled = true;
         m_Collider.enabled = true;
     }

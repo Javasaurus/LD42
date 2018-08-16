@@ -19,9 +19,6 @@ TagManager:
   - PlayerProjectile
   - Obstacle
   - PlayerHighScoreField
-  - OneWayPlatform
-  - DeathUI
-  - BGM_AUDIO
   layers:
   - Default
   - TransparentFX
@@ -38,11 +35,11 @@ TagManager:
   - Door
   - UIParticles
   - Pickup
-  - PickupPlatformCollider
-  - PlayerProjectile
-  - PlayerAvoid
-  - Boss
-  - Oil
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 

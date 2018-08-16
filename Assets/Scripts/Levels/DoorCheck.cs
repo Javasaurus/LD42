@@ -9,15 +9,11 @@ public class DoorCheck : MonoBehaviour
     public float RaycastLength = 0.5f;
     public LayerMask doorMask;
     private BoxCollider2D m_Collider;
-    private PlatformerMotor2D m_platformerMotor;
+
     private void Start()
     {
         m_Collider = GetComponent<BoxCollider2D>();
-        m_platformerMotor = GetComponent<PlatformerMotor2D>();
     }
-
-    bool clipping = false;
-
 
     // Update is called once per frame
     void FixedUpdate()
@@ -28,11 +24,7 @@ public class DoorCheck : MonoBehaviour
         if (hit.collider != null && hit.collider.tag == "Door")
         {
             Debug.Log("Hit door");
-            hit.collider.GetComponent<RoomTransition>().DoPlayerTransition(transform, hit.collider);
+            hit.collider.GetComponent<RoomTransition>().DoPlayerTransition(transform);
         }
-
     }
-
-
-
 }

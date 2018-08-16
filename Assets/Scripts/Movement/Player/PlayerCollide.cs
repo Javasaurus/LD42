@@ -26,7 +26,8 @@ public class PlayerCollide : MonoBehaviour
          }*/
         if (collision.gameObject.tag == "Enemy")
         {
-            health.DamagePlayer(1,1);
+            health.currDamage = 1;
+            health.DamagePlayer(1);
             collision.gameObject.GetComponent<EnemyController>().Death();
         }
     }

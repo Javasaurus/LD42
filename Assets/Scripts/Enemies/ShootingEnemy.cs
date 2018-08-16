@@ -30,7 +30,6 @@ public class ShootingEnemy : BasicEnemy
         else if (Time.time > missileLifeTimer)
         {
             currentProjectile.Explode();
-            launchTimer = Time.time + launchTimer;
         }
 
     }
@@ -48,31 +47,19 @@ public class ShootingEnemy : BasicEnemy
         }
     }
 
-    public override bool HandleImpact(PlayerBullet bullet)
-    {
-        Debug.Log("Hit");
-        ReceiveDamage(1);
-        return true;
-    }
-
-
-    private float launchDelay = 7.5f;
-    private float launchTimer;
     public virtual void LaunchBullet()
     {
         if (currentProjectile == null)
         {
             currentProjectile = Instantiate(projectile, launchingSpot.position, Quaternion.identity).GetComponent<SeekingMissile>();
             missileLifeTimer = Time.time + currentProjectile.lifetime;
-            m_Anim.SetBool("Attack", false);
         }
     }
 
     IEnumerator StopAttacking()
     {
         yield return new WaitForSeconds(5f);
-        timer = Time.time + 5f;
-
+        timer = Time.time + 3f;
         isAttacking = false;
         stopAttack = null;
     }

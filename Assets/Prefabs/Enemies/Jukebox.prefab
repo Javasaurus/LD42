@@ -187,10 +187,9 @@ MonoBehaviour:
   enemyHealth: 5
   drops:
   - prefab: {fileID: 1120036384954660, guid: b52d64b45469c234ca0e6cbb8e3cc55c, type: 2}
-    odds: 1
-    amount: 1
+    odds: 0.46
+    amount: 6
   isAttacking: 0
-  facePlayer: 1
 --- !u!212 &212187278572495828
 SpriteRenderer:
   m_ObjectHideFlags: 1

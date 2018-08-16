@@ -95,7 +95,7 @@ public class ExplodingBarrel : MonoBehaviour
         {
             if (collision.tag == "Player")
             {
-                collision.GetComponent<Health>().DamagePlayer(3, 1);
+                collision.GetComponent<Health>().DamagePlayer(1);
             }
         }
         else
