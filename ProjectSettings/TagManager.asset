@@ -22,6 +22,7 @@ TagManager:
   - OneWayPlatform
   - DeathUI
   - BGM_AUDIO
+  - Tag_Canvas
   layers:
   - Default
   - TransparentFX

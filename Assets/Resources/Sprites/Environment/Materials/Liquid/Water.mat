@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Water
-  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 10800, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -30,7 +30,9 @@ Material:
     - PixelSnap: 0
     - _Cutoff: 1
     - _EnableExternalAlpha: 0
+    - _InvFade: 1
     m_Colors:
-    - _Color: {r: 0, g: 1, b: 0.39811707, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 0.50980395}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TintColor: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 0.5176471}
